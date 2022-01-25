@@ -29,7 +29,7 @@ public class EnchantingTableBlockMixin {
 		SearchArea area = new SearchArea();
 		Box bounds = new Box(pos.add(-distance, depth, -distance), pos.add(distance, height, distance));
 		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
-		area.setSearchPredicate(blockState -> blockState.isOf(Blocks.BOOKSHELF));
+		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
 
 		float power = 0;
