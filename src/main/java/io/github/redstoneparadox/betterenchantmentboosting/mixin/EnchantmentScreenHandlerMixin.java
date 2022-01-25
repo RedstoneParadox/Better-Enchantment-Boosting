@@ -41,7 +41,9 @@ public abstract class EnchantmentScreenHandlerMixin {
 		Box bounds = new Box(pos.add(-3, -1, -3), pos.add(3, 2, 3));
 		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
 		area.setSearchPredicate(state -> state.isOf(Blocks.BOOKSHELF));
-		int bookshelves = area.search(world, pos, bounds).size();
+		List<BlockPos> bookshelvesList = area.search(world, pos, bounds);
+		int bookshelves = bookshelvesList.size();
+		System.out.println("bookshelves = " + bookshelves);
 
 		random.setSeed(seed.get());
 		for (int j = 0; j < 3; ++j) {

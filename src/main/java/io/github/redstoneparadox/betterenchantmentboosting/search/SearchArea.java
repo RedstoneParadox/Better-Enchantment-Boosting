@@ -56,11 +56,14 @@ public final class SearchArea {
 
 									if (bounds.contains(Vec3d.ofCenter(blockPos))) {
 										BlockState state = world.getBlockState(blockPos);
+										SearchNode nextNode = new SearchNode(nxtX, nxtY, nxtZ);
+										newNodes.add(nextNode);
 
 										if (searchPredicate.isMatch(state)) {
 											matchesList.add(blockPos);
-										} else if (growthPredicate.canGrow(state)) {
-											newNodes.add(new SearchNode(nxtX, nxtY, nxtZ));
+											nextNode.dead = true;
+										} else if (!growthPredicate.canGrow(state)) {
+											nextNode.dead = true;
 										}
 									}
 								}
