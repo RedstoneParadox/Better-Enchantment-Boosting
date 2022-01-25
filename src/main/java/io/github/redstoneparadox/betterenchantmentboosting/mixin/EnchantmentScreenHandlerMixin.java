@@ -53,7 +53,7 @@ public abstract class EnchantmentScreenHandlerMixin {
 
 		random.setSeed(seed.get());
 		for (int j = 0; j < 3; ++j) {
-			self.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(random, j, Math.round(power), stack);
+			self.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(random, j, (int) power, stack);
 			self.enchantmentId[j] = -1;
 			self.enchantmentLevel[j] = -1;
 			if (self.enchantmentPower[j] >= j + 1) continue;
