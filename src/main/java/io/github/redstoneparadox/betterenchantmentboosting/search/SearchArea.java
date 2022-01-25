@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -36,36 +37,32 @@ public final class SearchArea {
 
 			for (SearchNode node: nodes) {
 				if (!node.dead) {
-					for (int x = -1; x <= 1; x++) {
-						for (int y = -1; y <= 1; y++) {
-							for (int z = -1; z<=1; z++) {
-								boolean positionOccupied = false;
-								int nxtX = x + node.x;
-								int nxtY = y + node.y;
-								int nxtZ = z + node.z;
+					for (Direction direction: Direction.values()) {
+						boolean positionOccupied = false;
+						int nxtX = direction.getOffsetX() + node.x;
+						int nxtY = direction.getOffsetY() + node.y;
+						int nxtZ = direction.getOffsetZ() + node.z;
 
-								for (SearchNode node2: nodes) {
-									if (node2.x == nxtX && node2.y == nxtY && node2.z == nxtZ) {
-										positionOccupied = true;
-										break;
-									}
-								}
+						for (SearchNode node2: nodes) {
+							if (node2.x == nxtX && node2.y == nxtY && node2.z == nxtZ) {
+								positionOccupied = true;
+								break;
+							}
+						}
 
-								if (!positionOccupied) {
-									BlockPos blockPos = origin.add(nxtX, nxtY, nxtZ);
+						if (!positionOccupied) {
+							BlockPos blockPos = origin.add(nxtX, nxtY, nxtZ);
 
-									if (bounds.contains(Vec3d.ofCenter(blockPos))) {
-										BlockState state = world.getBlockState(blockPos);
-										SearchNode nextNode = new SearchNode(nxtX, nxtY, nxtZ);
-										newNodes.add(nextNode);
+							if (bounds.contains(Vec3d.ofCenter(blockPos))) {
+								BlockState state = world.getBlockState(blockPos);
+								SearchNode nextNode = new SearchNode(nxtX, nxtY, nxtZ);
+								newNodes.add(nextNode);
 
-										if (searchPredicate.isMatch(state)) {
-											matchesList.add(blockPos);
-											nextNode.dead = true;
-										} else if (!growthPredicate.canGrow(state)) {
-											nextNode.dead = true;
-										}
-									}
+								if (searchPredicate.isMatch(state)) {
+									matchesList.add(blockPos);
+									nextNode.dead = true;
+								} else if (!growthPredicate.canGrow(state)) {
+									nextNode.dead = true;
 								}
 							}
 						}
