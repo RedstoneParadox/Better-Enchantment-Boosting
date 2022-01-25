@@ -41,5 +41,7 @@ public class EnchantingTableBlockMixin {
 					(float)k - random.nextFloat() - 1.0f,
 					(double)((float)j + random.nextFloat()) - 0.5);
 		}
+
+		ci.cancel();
 	}
 }
