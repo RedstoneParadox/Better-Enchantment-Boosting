@@ -69,7 +69,6 @@ public record BetterEnchantmentBoostingConfig(boolean candleBoosting, double pow
 
 				if (exists) {
 					var jsonWriter = new JsonWriter(new BufferedWriter(new FileWriter(file)));
-					jsonWriter.setIndent("\n");
 					jsonWriter.setLenient(true);
 					Streams.write(json, jsonWriter);
 					jsonWriter.close();
