@@ -4,14 +4,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public final class SearchArea {
 	private GrowthPredicate growthPredicate = block -> false;
@@ -33,9 +29,8 @@ public final class SearchArea {
 		int maxX = (int) (bounds.maxX - origin.getX());
 		int maxY = (int) (bounds.maxY - origin.getY());
 		int maxZ = (int) (bounds.maxZ - origin.getZ());
-		CellArray cells = new CellArray(minX, minY, minZ, maxX, maxY, maxZ);
+		Cells cells = new Cells(minX, minY, minZ, maxX, maxY, maxZ);
 
-		System.out.println("Growing!");
 		while (true) {
 			int growingCount = 0;
 
@@ -51,7 +46,7 @@ public final class SearchArea {
 
 							BlockPos blockPos = origin.add(nxtX, nxtY, nxtZ);
 
-							if (bounds.contains(Vec3d.ofCenter(blockPos)) && cells.get(nxtX, nxtY, nxtZ) == CellState.EMPTY) {
+							if (nxtX >= minX && nxtX <= maxX && nxtY >= minY && nxtY <= maxY && nxtZ >= minZ && nxtZ <= maxZ && cells.get(nxtX, nxtY, nxtZ) == CellState.EMPTY) {
 								BlockState state = world.getBlockState(blockPos);
 
 								if (searchPredicate.isMatch(state)) {
@@ -72,7 +67,6 @@ public final class SearchArea {
 				}
 			}
 
-			System.out.println("growingCount = " + growingCount);
 			if (growingCount == 0) break;
 		}
 
@@ -89,17 +83,18 @@ public final class SearchArea {
 
 	private enum CellState {
 		EMPTY,
+		SPROUTED,
 		GROWING,
 		GROWN
 	}
 
-	private static class CellArray {
+	private static class Cells {
 		final int minX;
 		final int minY;
 		final int minZ;
 		List<List<List<CellState>>> cellStates = new ArrayList<>();
 
-		private CellArray(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+		private Cells(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
 			this.minX = minX;
 			this.minY = minY;
 			this.minZ = minZ;
