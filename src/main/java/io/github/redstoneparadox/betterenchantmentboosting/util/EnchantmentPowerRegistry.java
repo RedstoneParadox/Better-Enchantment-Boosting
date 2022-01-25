@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EnchantmentPowerRegistry {
-	private static final Map<BlockState, Float> REGISTRY = new HashMap<>();
+	private static final Map<BlockState, Double> REGISTRY = new HashMap<>();
 
-	public static void register(BlockState state, float power) {
+	public static void register(BlockState state, double power) {
 		REGISTRY.put(state, power);
 	}
 
-	public static float getPower(BlockState state) {
+	public static double getPower(BlockState state) {
 		if (REGISTRY.containsKey(state)) return REGISTRY.get(state);
 		return 0;
 	}

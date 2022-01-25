@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
+import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentPowerRegistry;
 import io.github.redstoneparadox.betterenchantmentboosting.util.SearchArea;
 import net.minecraft.block.AbstractBlock;
@@ -39,8 +40,11 @@ public abstract class EnchantmentScreenHandlerMixin {
 	private void method_17411(ItemStack stack, World world, BlockPos pos) {
 		EnchantmentScreenHandler self = (EnchantmentScreenHandler)(Object) this;
 
+		int distance = BetterEnchantmentBoosting.CONFIG.bounds().distance();
+		int height = BetterEnchantmentBoosting.CONFIG.bounds().height();
+		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
 		SearchArea area = new SearchArea();
-		Box bounds = new Box(pos.add(-3, -1, -3), pos.add(3, 2, 3));
+		Box bounds = new Box(pos.add(-distance, -depth, -distance), pos.add(distance, height, distance));
 		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
 		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
