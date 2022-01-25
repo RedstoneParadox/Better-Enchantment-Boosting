@@ -40,6 +40,27 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 							.with(CandleBlock.LIT, true),
 					1.0f
 			);
+			EnchantmentPowerRegistry.register(
+					candleBlock
+							.getDefaultState()
+							.with(CandleBlock.CANDLES, 3)
+							.with(CandleBlock.LIT, true),
+					0.75f
+			);
+			EnchantmentPowerRegistry.register(
+					candleBlock
+							.getDefaultState()
+							.with(CandleBlock.CANDLES, 2)
+							.with(CandleBlock.LIT, true),
+					0.5f
+			);
+			EnchantmentPowerRegistry.register(
+					candleBlock
+							.getDefaultState()
+							.with(CandleBlock.CANDLES, 1)
+							.with(CandleBlock.LIT, true),
+					0.25f
+			);
 		}
 	}
 }
