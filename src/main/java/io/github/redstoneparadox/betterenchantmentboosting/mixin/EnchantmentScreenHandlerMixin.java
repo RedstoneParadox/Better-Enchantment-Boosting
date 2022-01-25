@@ -44,7 +44,7 @@ public abstract class EnchantmentScreenHandlerMixin {
 		int height = BetterEnchantmentBoosting.CONFIG.bounds().height();
 		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
 		SearchArea area = new SearchArea();
-		Box bounds = new Box(pos.add(-distance, -depth, -distance), pos.add(distance, height, distance));
+		Box bounds = new Box(pos.add(-distance, depth, -distance), pos.add(distance, height, distance));
 		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
 		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
