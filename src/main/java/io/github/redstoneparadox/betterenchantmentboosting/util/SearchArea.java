@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.betterenchantmentboosting.search;
+package io.github.redstoneparadox.betterenchantmentboosting.util;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

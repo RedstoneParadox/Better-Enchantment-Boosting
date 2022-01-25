@@ -1,6 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
-import io.github.redstoneparadox.betterenchantmentboosting.search.SearchArea;
+import io.github.redstoneparadox.betterenchantmentboosting.util.SearchArea;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
