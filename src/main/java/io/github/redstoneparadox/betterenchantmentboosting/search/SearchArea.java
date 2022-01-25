@@ -25,9 +25,8 @@ public final class SearchArea {
 		this.searchPredicate = searchPredicate;
 	}
 
-	public int search(World world, BlockPos origin, Box bounds) {
-		boolean terminate = false;
-		int matches = 0;
+	public List<BlockPos> search(World world, BlockPos origin, Box bounds) {
+		List<BlockPos> matchesList = new ArrayList<>();
 
 		nodes.clear();
 		nodes.add(new SearchNode(0, 0, 0));
@@ -59,7 +58,7 @@ public final class SearchArea {
 										BlockState state = world.getBlockState(blockPos);
 
 										if (searchPredicate.isMatch(state)) {
-											matches += 1;
+											matchesList.add(blockPos);
 										} else if (growthPredicate.canGrow(state)) {
 											newNodes.add(new SearchNode(nxtX, nxtY, nxtZ));
 										}
@@ -80,7 +79,7 @@ public final class SearchArea {
 			nodes.addAll(newNodes);
 		}
 
-		return matches;
+		return matchesList;
 	}
 
 	public interface GrowthPredicate {
