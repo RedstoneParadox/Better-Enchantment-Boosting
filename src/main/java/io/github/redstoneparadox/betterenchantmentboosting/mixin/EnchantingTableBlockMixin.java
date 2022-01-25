@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
+import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentPowerRegistry;
 import io.github.redstoneparadox.betterenchantmentboosting.util.SearchArea;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -26,6 +27,18 @@ public class EnchantingTableBlockMixin {
 		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
 		area.setSearchPredicate(blockState -> blockState.isOf(Blocks.BOOKSHELF));
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
+
+		float power = 0;
+
+		for (BlockPos bookshelfPos: bookshelfPositions) {
+			BlockState state2 = world.getBlockState(bookshelfPos);
+			power += EnchantmentPowerRegistry.getPower(state2);
+		}
+
+		if (power < 1.0) {
+			ci.cancel();
+			return;
+		}
 
 		for (BlockPos bookshelfPos: bookshelfPositions) {
 			if (random.nextInt(16) != 0) continue;
