@@ -4,13 +4,13 @@
   "version": "${version}",
 
   "name": "Better Enchantment Boosting",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Allows for the Enchantment Table to be boosted by bookshelves from farther away.",
   "authors": [
     "RedstoneParadox"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/RedstoneParadox/Better-Enchantment-Boosting",
+    "sources": "https://github.com/RedstoneParadox/Better-Enchantment-Boosting"
   },
 
   "license": "MIT",
