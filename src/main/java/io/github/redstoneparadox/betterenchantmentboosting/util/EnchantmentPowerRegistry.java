@@ -16,4 +16,8 @@ public class EnchantmentPowerRegistry {
 		if (REGISTRY.containsKey(state)) return REGISTRY.get(state);
 		return 0;
 	}
+
+	public static boolean isRegistered(BlockState state) {
+		return REGISTRY.containsKey(state);
+	}
 }

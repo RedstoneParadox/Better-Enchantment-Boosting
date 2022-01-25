@@ -1,7 +1,9 @@
 package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
+import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentPowerRegistry;
 import io.github.redstoneparadox.betterenchantmentboosting.util.SearchArea;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -40,13 +42,18 @@ public abstract class EnchantmentScreenHandlerMixin {
 		SearchArea area = new SearchArea();
 		Box bounds = new Box(pos.add(-3, -1, -3), pos.add(3, 2, 3));
 		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
-		area.setSearchPredicate(state -> state.isOf(Blocks.BOOKSHELF));
-		List<BlockPos> bookshelvesList = area.search(world, pos, bounds);
-		int bookshelves = bookshelvesList.size();
+		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
+		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
+		float power = 0;
+
+		for (BlockPos bookshelfPos: bookshelfPositions) {
+			BlockState state = world.getBlockState(bookshelfPos);
+			power += EnchantmentPowerRegistry.getPower(state);
+		}
 
 		random.setSeed(seed.get());
 		for (int j = 0; j < 3; ++j) {
-			self.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(random, j, bookshelves, stack);
+			self.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(random, j, Math.round(power), stack);
 			self.enchantmentId[j] = -1;
 			self.enchantmentLevel[j] = -1;
 			if (self.enchantmentPower[j] >= j + 1) continue;
