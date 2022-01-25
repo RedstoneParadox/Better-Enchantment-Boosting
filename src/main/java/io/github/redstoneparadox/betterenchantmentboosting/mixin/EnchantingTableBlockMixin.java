@@ -28,9 +28,11 @@ public class EnchantingTableBlockMixin {
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
 
 		for (BlockPos bookshelfPos: bookshelfPositions) {
-			int i = bookshelfPos.getX();
-			int k = bookshelfPos.getY();
-			int j = bookshelfPos.getZ();
+			if (random.nextInt(16) != 0) continue;
+
+			int i = bookshelfPos.getX() - pos.getX();
+			int k = bookshelfPos.getY() - pos.getY();
+			int j = bookshelfPos.getZ() - pos.getZ();
 
 			world.addParticle(
 					ParticleTypes.ENCHANT,
