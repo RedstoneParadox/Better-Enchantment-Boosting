@@ -27,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
@@ -59,7 +60,7 @@ public abstract class EnchantmentScreenHandlerMixin {
 		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
 		SearchArea area = new SearchArea();
 		Box bounds = new Box(pos.add(-distance, depth, -distance), pos.add(distance, height, distance));
-		area.setGrowthPredicate(AbstractBlock.AbstractBlockState::isAir);
+		area.setGrowthPredicate(state -> Objects.requireNonNull(BetterEnchantmentBoosting.Tags.NON_BOOKSHELF_BLOCKING).contains(state.getBlock()));
 		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
 		float power = 0;
