@@ -8,12 +8,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CandleBlock;
 import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
-import java.util.Objects;
-
 public class BetterEnchantmentBoosting implements ModInitializer {
+	public static final String MODID = "betterenchatnmentboosting";
 	public static final BetterEnchantmentBoostingConfig CONFIG = BetterEnchantmentBoostingConfig.load();
 
 	@Override
@@ -21,13 +20,15 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 		EnchantmentPowerRegistry.register(Blocks.BOOKSHELF.getDefaultState(), 1.0f);
 		EnchantmentPowerRegistry.register(Blocks.CANDLE.getDefaultState().with(CandleBlock.CANDLES, 4), 1.0f);
 
-		List<Block> bookshelves = Objects.requireNonNull(BlockTags.getTagGroup().getTag(new Identifier("c:bookshelves"))).values();
+		Tag<Block> bookshelves = BlockTags.getTagGroup().getTag(new Identifier("c:bookshelves"));
 
-		for (Block bookshelf: bookshelves) {
-			BlockState state = bookshelf.getDefaultState();
+		if (bookshelves != null) {
+			for (Block bookshelf: bookshelves.values()) {
+				BlockState state = bookshelf.getDefaultState();
 
-			if (!EnchantmentPowerRegistry.isRegistered(state)) {
-				EnchantmentPowerRegistry.register(state, 1.0);
+				if (!EnchantmentPowerRegistry.isRegistered(state)) {
+					EnchantmentPowerRegistry.register(state, 1.0);
+				}
 			}
 		}
 
@@ -83,5 +84,9 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 				);
 			}
 		}
+	}
+
+	public static class Tags {
+		public static final Tag<Block> NON_BOOKSHELF_BLOCKING = BlockTags.getTagGroup().getTag(new Identifier(MODID, "non_bookshelf_blocking"));
 	}
 }

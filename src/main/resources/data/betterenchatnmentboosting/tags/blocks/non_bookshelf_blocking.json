@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:buttons",
+    "#minecraft:campfires",
+    "#minecraft:candles",
+    "#minecraft:carpets",
+    "#minecraft:cave_vines",
+    "#minecraft:coral_plants",
+    "#minecraft:crops",
+    "#minecraft:flowers",
+    "#minecraft:pressure_plates",
+    "#minecraft:rails",
+    "#minecraft:signs",
+    "#minecraft:trapdoors",
+    "#minecraft:wall_corals",
+    "#minecraft:wall_signs",
+    "minecraft:chain",
+    "minecraft:lantern",
+    "minecraft:snow",
+    "minecraft:soul_lantern"
+  ]
+}
