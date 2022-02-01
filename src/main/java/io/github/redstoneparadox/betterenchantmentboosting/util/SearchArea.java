@@ -84,7 +84,6 @@ public final class SearchArea {
 
 	private enum CellState {
 		EMPTY,
-		SPROUTED,
 		GROWING,
 		GROWN
 	}
