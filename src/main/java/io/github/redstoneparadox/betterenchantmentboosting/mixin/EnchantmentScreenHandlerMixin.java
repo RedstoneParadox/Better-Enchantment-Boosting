@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.Property;
@@ -17,28 +18,41 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.BiConsumer;
 
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin {
+	@Unique ItemStack onContentChangedStack = ItemStack.EMPTY;
 	@Shadow @Final private Random random;
 	@Shadow @Final private Property seed;
 
 	@Shadow
 	protected abstract List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int level);
 
-	/**
-	 * @author RedstoneParadox
-	 *
-	 * @reason No good way to just inject this code.
-	 */
-	@Overwrite
-	private void method_17411(ItemStack stack, World world, BlockPos pos) {
+	@Inject(method = "onContentChanged", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/inventory/Inventory;getStack(I)Lnet/minecraft/item/ItemStack;"))
+	private void onContentChanged_GetStack(Inventory inventory, CallbackInfo ci) {
+		onContentChangedStack = inventory.getStack(0);
+	}
+
+	@ModifyArgs(method = "onContentChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandlerContext;run(Ljava/util/function/BiConsumer;)V"))
+	private void onContentChanged_CallRun(Args args) {
+		args.set(0, (BiConsumer<World, BlockPos>) this::bookshelfSearch);
+	}
+
+	private void bookshelfSearch(World world, BlockPos pos) {
 		EnchantmentScreenHandler self = (EnchantmentScreenHandler)(Object) this;
+		ItemStack stack = onContentChangedStack;
+		onContentChangedStack = ItemStack.EMPTY;
 
 		int distance = BetterEnchantmentBoosting.CONFIG.bounds().distance();
 		int height = BetterEnchantmentBoosting.CONFIG.bounds().height();
