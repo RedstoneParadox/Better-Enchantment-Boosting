@@ -50,12 +50,13 @@ public final class SearchArea {
 								BlockState state = world.getBlockState(blockPos);
 
 								if (searchPredicate.isMatch(state)) {
-									cells.set(nxtX, nxtY, nxtZ, CellState.GROWN);
 									matches.add(blockPos);
-								} else if (!growthPredicate.canGrow(state)) {
-									cells.set(nxtX, nxtY, nxtZ, CellState.GROWN);
-								} else {
+								}
+
+								if (growthPredicate.canGrow(state)) {
 									cells.set(nxtX, nxtY, nxtZ, CellState.GROWING);
+								} else {
+									cells.set(nxtX, nxtY, nxtZ, CellState.GROWN);
 									growingCount += 1;
 								}
 							}
