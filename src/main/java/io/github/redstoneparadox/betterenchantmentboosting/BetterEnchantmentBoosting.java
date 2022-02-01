@@ -4,8 +4,14 @@ import io.github.redstoneparadox.betterenchantmentboosting.config.BetterEnchantm
 import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentPowerRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CandleBlock;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.util.Identifier;
+
+import java.util.List;
+import java.util.Objects;
 
 public class BetterEnchantmentBoosting implements ModInitializer {
 	public static final BetterEnchantmentBoostingConfig CONFIG = BetterEnchantmentBoostingConfig.load();
@@ -14,6 +20,16 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 	public void onInitialize() {
 		EnchantmentPowerRegistry.register(Blocks.BOOKSHELF.getDefaultState(), 1.0f);
 		EnchantmentPowerRegistry.register(Blocks.CANDLE.getDefaultState().with(CandleBlock.CANDLES, 4), 1.0f);
+
+		List<Block> bookshelves = Objects.requireNonNull(BlockTags.getTagGroup().getTag(new Identifier("c:bookshelves"))).values();
+
+		for (Block bookshelf: bookshelves) {
+			BlockState state = bookshelf.getDefaultState();
+
+			if (!EnchantmentPowerRegistry.isRegistered(state)) {
+				EnchantmentPowerRegistry.register(state, 1.0);
+			}
+		}
 
 		if (CONFIG.candleBoosting()) {
 			Block[] candleBlocks = new Block[] {
