@@ -29,7 +29,7 @@ public class EnchantingTableBlockMixin {
 		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
 		SearchArea area = new SearchArea();
 		Box bounds = new Box(pos.add(-distance, depth, -distance), pos.add(distance, height, distance));
-		area.setGrowthPredicate(state2 -> Objects.requireNonNull(BetterEnchantmentBoosting.Tags.NON_BOOKSHELF_BLOCKING).contains(state2.getBlock()));
+		area.setGrowthPredicate(state2 -> Objects.requireNonNull(BetterEnchantmentBoosting.Tags.NON_BOOKSHELF_BLOCKING).values().contains(state2.getBlock()));
 		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
 
