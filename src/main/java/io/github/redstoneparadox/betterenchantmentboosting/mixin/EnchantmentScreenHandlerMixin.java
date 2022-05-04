@@ -60,7 +60,7 @@ public abstract class EnchantmentScreenHandlerMixin {
 		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
 		SearchArea area = new SearchArea();
 		Box bounds = new Box(pos.add(-distance, depth, -distance), pos.add(distance, height, distance));
-		area.setGrowthPredicate(state -> Objects.requireNonNull(BetterEnchantmentBoosting.Tags.NON_BOOKSHELF_BLOCKING).values().contains(state.getBlock()));
+		area.setGrowthPredicate(state -> state.isIn(BetterEnchantmentBoosting.Tags.NON_BOOKSHELF_BLOCKING));
 		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
 		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
 		float power = 0;

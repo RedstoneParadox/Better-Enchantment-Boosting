@@ -9,7 +9,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.CandleBlock;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class BetterEnchantmentBoosting implements ModInitializer {
 	public static final String MODID = "betterenchatnmentboosting";
@@ -17,8 +19,7 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		EnchantmentPowerRegistry.register(Blocks.BOOKSHELF.getDefaultState(), 1.0f);
-		EnchantmentPowerRegistry.register(Blocks.CANDLE.getDefaultState().with(CandleBlock.CANDLES, 4), 1.0f);
+		EnchantmentPowerRegistry.registerState(Blocks.BOOKSHELF.getDefaultState(), 1.0f);
 
 		Tag<Block> bookshelves = BlockTags.getTagGroup().getTag(new Identifier("c:bookshelves"));
 
@@ -27,12 +28,14 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 				BlockState state = bookshelf.getDefaultState();
 
 				if (!EnchantmentPowerRegistry.isRegistered(state)) {
-					EnchantmentPowerRegistry.register(state, 1.0);
+					EnchantmentPowerRegistry.registerState(state, 1.0);
 				}
 			}
 		}
 
 		if (CONFIG.candleBoosting()) {
+
+
 			Block[] candleBlocks = new Block[] {
 					Blocks.CANDLE,
 					Blocks.WHITE_CANDLE,
@@ -54,28 +57,28 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 			};
 
 			for (Block candleBlock: candleBlocks) {
-				EnchantmentPowerRegistry.register(
+				EnchantmentPowerRegistry.registerState(
 						candleBlock
 								.getDefaultState()
 								.with(CandleBlock.CANDLES, 4)
 								.with(CandleBlock.LIT, true),
 						CONFIG.powerPerCandle() * 4
 				);
-				EnchantmentPowerRegistry.register(
+				EnchantmentPowerRegistry.registerState(
 						candleBlock
 								.getDefaultState()
 								.with(CandleBlock.CANDLES, 3)
 								.with(CandleBlock.LIT, true),
 						CONFIG.powerPerCandle() * 3
 				);
-				EnchantmentPowerRegistry.register(
+				EnchantmentPowerRegistry.registerState(
 						candleBlock
 								.getDefaultState()
 								.with(CandleBlock.CANDLES, 2)
 								.with(CandleBlock.LIT, true),
 						CONFIG.powerPerCandle() * 2
 				);
-				EnchantmentPowerRegistry.register(
+				EnchantmentPowerRegistry.registerState(
 						candleBlock
 								.getDefaultState()
 								.with(CandleBlock.CANDLES, 1)
@@ -87,6 +90,6 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 	}
 
 	public static class Tags {
-		public static final Tag<Block> NON_BOOKSHELF_BLOCKING = BlockTags.getTagGroup().getTag(new Identifier(MODID, "non_bookshelf_blocking"));
+		public static final TagKey<Block> NON_BOOKSHELF_BLOCKING = TagKey.of(Registry.BLOCK_KEY, new Identifier(MODID, "non_bookshelf_blocking"));
 	}
 }
