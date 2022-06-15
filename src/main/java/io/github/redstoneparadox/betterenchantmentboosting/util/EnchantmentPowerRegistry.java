@@ -1,12 +1,21 @@
 package io.github.redstoneparadox.betterenchantmentboosting.util;
 
+import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.BlockState;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.profiler.Profiler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 public class EnchantmentPowerRegistry {
 	private static final Map<BlockState, Double> STATE_REGISTRY = new HashMap<>();
@@ -14,6 +23,18 @@ public class EnchantmentPowerRegistry {
 	private static final List<DeferredRegistryAction> DEFERRED_REGISTRY_ACTIONS = new ArrayList<>();
 
 	static {
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new IdentifiableResourceReloadListener() {
+			@Override
+			public Identifier getFabricId() {
+				return new Identifier(BetterEnchantmentBoosting.MODID, "enchantment_power");
+			}
+
+			@Override
+			public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
+				return null;
+			}
+		});
+
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resourceManager, success) -> {
 			if (success) {
 				TEMPORARY_STATE_REGISTRY.clear();
