@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
+@Deprecated
 public class EnchantmentPowerRegistry {
 	private static final Map<BlockState, Double> STATE_REGISTRY = new HashMap<>();
 	private static final Map<BlockState, Double> TEMPORARY_STATE_REGISTRY = new HashMap<>();
