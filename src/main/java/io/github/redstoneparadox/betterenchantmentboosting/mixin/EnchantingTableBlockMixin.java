@@ -20,15 +20,7 @@ public class EnchantingTableBlockMixin {
 	@Inject(method = "randomDisplayTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockWithEntity;randomDisplayTick(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Ljava/util/Random;)V"), cancellable = true)
 	private void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random, CallbackInfo ci) {
 		List<BlockPos> bookshelfPositions = SearchUtil.search(world, pos);
-
-		float power = 0;
-
-		for (BlockPos bookshelfPos: bookshelfPositions) {
-			BlockState state2 = world.getBlockState(bookshelfPos);
-			if (state2.getBlock() instanceof EnchantmentTableBooster) {
-				power += ((EnchantmentTableBooster)state2.getBlock()).getPower(world, state2);
-			}
-		}
+		double power = EnchantmentTableBooster.getPower(world, bookshelfPositions);
 
 		if (power < 1.0) {
 			ci.cancel();

@@ -51,14 +51,7 @@ public abstract class EnchantmentScreenHandlerMixin {
 		onContentChangedStack = ItemStack.EMPTY;
 
 		List<BlockPos> bookshelfPositions = SearchUtil.search(world, pos);
-		float power = 0;
-
-		for (BlockPos bookshelfPos: bookshelfPositions) {
-			BlockState state2 = world.getBlockState(bookshelfPos);
-			if (state2.getBlock() instanceof EnchantmentTableBooster) {
-				power += ((EnchantmentTableBooster)state2.getBlock()).getPower(world, state2);
-			}
-		}
+		double power = EnchantmentTableBooster.getPower(world, bookshelfPositions);
 
 		random.setSeed(seed.get());
 		for (int j = 0; j < 3; ++j) {
