@@ -22,18 +22,13 @@ public class SearchUtil {
 		SearchArea area = new SearchArea();
 
 		area.setGrowthPredicate(state -> state.isIn(Tags.NON_BOOKSHELF_BLOCKING));
-		area.setSearchPredicate(SearchUtil::hasEnchantmentPower);
+		area.setSearchPredicate(state -> state.isIn(Tags.ENCHANTMENT_BOOSTING));
 
 		return area.search(world, origin, bounds);
 	}
 
-	private static boolean hasEnchantmentPower(BlockState state) {
-		if (state.isIn(Tags.BOOKSHELVES)) return true;
-		else return AbstractCandleBlock.isLitCandle(state) && BetterEnchantmentBoosting.CONFIG.candleBoosting();
-	}
-
 	public static class Tags {
-		public static final TagKey<Block> BOOKSHELVES = TagKey.of(Registry.BLOCK_KEY, new Identifier("c:bookshelves"));
+		public static final TagKey<Block> ENCHANTMENT_BOOSTING = TagKey.of(Registry.BLOCK_KEY, new Identifier(BetterEnchantmentBoosting.MODID, "enchantment_boosting"));
 		public static final TagKey<Block> NON_BOOKSHELF_BLOCKING = TagKey.of(Registry.BLOCK_KEY, new Identifier(BetterEnchantmentBoosting.MODID, "non_bookshelf_blocking"));
 	}
 }

@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class AbstractBlockMixin implements EnchantmentTableBooster {
 	@Override
 	public double getPower(World world, BlockState state) {
-		if (state.isIn(SearchUtil.Tags.BOOKSHELVES)) return 1.0;
-		return 0;
+		return 1.0f;
 	}
 }
