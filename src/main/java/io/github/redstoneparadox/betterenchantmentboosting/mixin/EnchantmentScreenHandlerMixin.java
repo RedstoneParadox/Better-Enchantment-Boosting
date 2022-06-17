@@ -1,8 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
-import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
-import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentPowerRegistry;
-import io.github.redstoneparadox.betterenchantmentboosting.util.SearchArea;
+import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentTableBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.util.SearchUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -12,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.Property;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -57,8 +54,10 @@ public abstract class EnchantmentScreenHandlerMixin {
 		float power = 0;
 
 		for (BlockPos bookshelfPos: bookshelfPositions) {
-			BlockState state = world.getBlockState(bookshelfPos);
-			power += EnchantmentPowerRegistry.getPower(state);
+			BlockState state2 = world.getBlockState(bookshelfPos);
+			if (state2.getBlock() instanceof EnchantmentTableBooster) {
+				power += ((EnchantmentTableBooster)state2.getBlock()).getPower(world, state2);
+			}
 		}
 
 		random.setSeed(seed.get());
