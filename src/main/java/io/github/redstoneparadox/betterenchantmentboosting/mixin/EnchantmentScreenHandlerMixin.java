@@ -2,7 +2,6 @@ package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
 import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentTableBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.util.SearchUtil;
-import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.inventory.Inventory;

@@ -1,9 +1,7 @@
 package io.github.redstoneparadox.betterenchantmentboosting.util;
 
 import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
-import net.minecraft.block.AbstractCandleBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;

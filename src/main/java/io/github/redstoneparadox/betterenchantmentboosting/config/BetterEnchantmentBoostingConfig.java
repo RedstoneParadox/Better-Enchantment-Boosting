@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.config;
 
 import com.google.common.io.Files;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
@@ -13,15 +12,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.include.com.google.common.base.Charsets;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 
 public record BetterEnchantmentBoostingConfig(boolean candleBoosting, double powerPerCandle, BoundsConfig bounds) {
 	public static final Codec<BetterEnchantmentBoostingConfig> CODEC = RecordCodecBuilder.create(
