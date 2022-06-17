@@ -3,9 +3,8 @@ package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentPowerRegistry;
 import io.github.redstoneparadox.betterenchantmentboosting.util.SearchArea;
-import net.minecraft.block.AbstractBlock;
+import io.github.redstoneparadox.betterenchantmentboosting.util.SearchUtil;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.inventory.Inventory;
@@ -27,7 +26,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
@@ -55,14 +53,7 @@ public abstract class EnchantmentScreenHandlerMixin {
 		ItemStack stack = onContentChangedStack;
 		onContentChangedStack = ItemStack.EMPTY;
 
-		int distance = BetterEnchantmentBoosting.CONFIG.bounds().distance();
-		int height = BetterEnchantmentBoosting.CONFIG.bounds().height();
-		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
-		SearchArea area = new SearchArea();
-		Box bounds = new Box(pos.add(-distance, depth, -distance), pos.add(distance, height, distance));
-		area.setGrowthPredicate(state -> state.isIn(BetterEnchantmentBoosting.Tags.NON_BOOKSHELF_BLOCKING));
-		area.setSearchPredicate(EnchantmentPowerRegistry::isRegistered);
-		List<BlockPos> bookshelfPositions = area.search(world, pos, bounds);
+		List<BlockPos> bookshelfPositions = SearchUtil.search(world, pos);
 		float power = 0;
 
 		for (BlockPos bookshelfPos: bookshelfPositions) {
