@@ -31,12 +31,12 @@ public final class SearchArea {
 		int maxZ = (int) (bounds.maxZ - origin.getZ());
 		Cells cells = new Cells(minX, minY, minZ, maxX, maxY, maxZ);
 
-		while (true) {
-			int growingCount = 0;
-
+		int growingCount = 1;
+		while (growingCount > 0) {
 			for (int x = minX; x <= maxX; x++) {
 				for (int y = minY; y <= maxY; y++) {
 					for (int z = minZ; z <= maxZ; z++) {
+						// Only evaluate cells that are currently growing
 						if (cells.get(x, y, z) != CellState.GROWING) continue;
 
 						for (Direction direction: Direction.values()) {
@@ -46,6 +46,7 @@ public final class SearchArea {
 
 							BlockPos blockPos = origin.add(nxtX, nxtY, nxtZ);
 
+							// Make sure the cell is within bounds and is empty
 							if (nxtX >= minX && nxtX <= maxX && nxtY >= minY && nxtY <= maxY && nxtZ >= minZ && nxtZ <= maxZ && cells.get(nxtX, nxtY, nxtZ) == CellState.EMPTY) {
 								BlockState state = world.getBlockState(blockPos);
 
@@ -55,20 +56,19 @@ public final class SearchArea {
 
 								if (growthPredicate.canGrow(state)) {
 									cells.set(nxtX, nxtY, nxtZ, CellState.GROWING);
+									growingCount += 1;
 								} else {
 									cells.set(nxtX, nxtY, nxtZ, CellState.GROWN);
-									growingCount += 1;
 								}
 							}
 						}
 
 						// Cell no longer needs to grow in future iterations
 						cells.set(x, y, z, CellState.GROWN);
+						growingCount -= 1;
 					}
 				}
 			}
-
-			if (growingCount == 0) break;
 		}
 
 		return matches;
