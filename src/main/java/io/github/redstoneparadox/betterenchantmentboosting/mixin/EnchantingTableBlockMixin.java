@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @Mixin(EnchantingTableBlock.class)
-public class EnchantingTableBlockMixin {
+public abstract class EnchantingTableBlockMixin {
 	@Inject(method = "randomDisplayTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockWithEntity;randomDisplayTick(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/random/Random;)V"), cancellable = true)
 	private void randomDisplayTick(BlockState state, World world, BlockPos pos, net.minecraft.util.math.random.Random random, CallbackInfo ci) {
 		List<BlockPos> bookshelfPositions = SearchUtil.search(world, pos);
