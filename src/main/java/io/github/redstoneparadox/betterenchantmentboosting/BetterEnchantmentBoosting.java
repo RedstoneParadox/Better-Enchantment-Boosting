@@ -4,7 +4,7 @@ import io.github.redstoneparadox.betterenchantmentboosting.config.BetterEnchantm
 import net.fabricmc.api.ModInitializer;
 
 public class BetterEnchantmentBoosting implements ModInitializer {
-	public static final String MODID = "betterenchatnmentboosting";
+	public static final String MODID = "betterenchantmentboosting";
 	public static final BetterEnchantmentBoostingConfig CONFIG = BetterEnchantmentBoostingConfig.load();
 
 	@Override
