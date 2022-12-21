@@ -10,7 +10,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.Property;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +28,7 @@ import java.util.function.BiConsumer;
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin {
 	@Unique ItemStack onContentChangedStack = ItemStack.EMPTY;
-	@Shadow @Final private Random random;
+	@Shadow @Final private RandomGenerator random;
 	@Shadow @Final private Property seed;
 
 	@Shadow

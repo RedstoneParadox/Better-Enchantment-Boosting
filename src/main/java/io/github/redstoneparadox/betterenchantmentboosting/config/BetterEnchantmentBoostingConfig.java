@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.config;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
@@ -10,7 +11,6 @@ import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import org.spongepowered.include.com.google.common.base.Charsets;
 
 import java.io.BufferedWriter;
 import java.io.File;

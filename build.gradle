@@ -12,16 +12,28 @@ group = project.maven_group
 
 repositories {
 	maven { url 'https://jitpack.io' }
+	maven {
+		name = 'Quilt'
+		url = 'https://maven.quiltmc.org/repository/release'
+	}
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	minecraft libs.minecraft
+	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
+	// Replace the above line with the block below if you want to use Mojang mappings as your primary mappings, falling back on QM for parameters and Javadocs
+	/*
+	mappings loom.layered {
+		mappings "org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:intermediary-v2"
+		officialMojangMappings()
+	}
+	*/
+	modImplementation libs.quilt.loader
 
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	// modRuntimeOnly 'com.github.paulevsGitch:BCLib:1.2.5'
+	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
+	// Quilted Fabric API will automatically pull in the correct QSL version.
+	modImplementation libs.quilted.fabric.api
+	// modImplementation libs.bundles.quilted.fabric.api // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
 }
 
 processResources {
@@ -33,20 +45,28 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = 'UTF-8'
 	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	it.options.release = 17
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
+	// Still required by IDEs such as Eclipse and Visual Studio Code
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+
+	// If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
+	// Uncomment this line to generate them.
+	// withJavadocJar()
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+	filesMatching('LICENSE') {
+		rename '^(LICENSE.*?)(\\..*)?$', "\$1_${archivesBaseName}\$2"
 	}
 }
 

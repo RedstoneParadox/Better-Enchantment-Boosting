@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "io.github.redstoneparadox",
+    "id": "betterenchantmentboosting",
+    "version": "${version}",
+    "metadata": {
+      "name": "Better Enchantment Boosting",
+      "description": "Allows for the Enchantment Table to be boosted by bookshelves from farther away.",
+      "contributors": {
+        "RedstoneParadox": "Owner"
+      },
+      "contact": {
+        "homepage": "https://github.com/RedstoneParadox/Better-Enchantment-Boosting",
+        "issues": "https://github.com/RedstoneParadox/Better-Enchantment-Boosting/issues",
+        "sources": "https://github.com/RedstoneParadox/Better-Enchantment-Boosting"
+      },
+      "icon": "assets/betterenchantmentboosting/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.17.6-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=5.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.19.3"
+      }
+    ]
+  },
+  "mixin": "betterenchantmentboosting.mixins.json"
+}
