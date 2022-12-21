@@ -2,11 +2,12 @@ package io.github.redstoneparadox.betterenchantmentboosting.util;
 
 import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import net.minecraft.block.Block;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.registry.Registry;
+
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class SearchUtil {
 	}
 
 	public static class Tags {
-		public static final TagKey<Block> ENCHANTMENT_BOOSTING = TagKey.of(Registry.BLOCK_KEY, new Identifier(BetterEnchantmentBoosting.MODID, "enchantment_boosting"));
-		public static final TagKey<Block> NON_BOOKSHELF_BLOCKING = TagKey.of(Registry.BLOCK_KEY, new Identifier(BetterEnchantmentBoosting.MODID, "non_bookshelf_blocking"));
+		public static final TagKey<Block> ENCHANTMENT_BOOSTING = TagKey.of(Registries.BLOCK.getKey(), new Identifier(BetterEnchantmentBoosting.MODID, "enchantment_boosting"));
+		public static final TagKey<Block> NON_BOOKSHELF_BLOCKING = TagKey.of(Registries.BLOCK.getKey(), new Identifier(BetterEnchantmentBoosting.MODID, "non_bookshelf_blocking"));
 	}
 }
