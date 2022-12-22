@@ -8,6 +8,10 @@ version = "${project.version}"
 group = project.maven_group
 
 repositories {
+	maven {
+		name = 'Quilt'
+		url = 'https://maven.quiltmc.org/repository/release'
+	}
 	maven { url 'https://jitpack.io' }
 }
 
