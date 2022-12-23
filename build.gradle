@@ -12,7 +12,7 @@ repositories {
 		name = 'Quilt'
 		url = 'https://maven.quiltmc.org/repository/release'
 	}
-	maven { url 'https://jitpack.io' }
+	// maven { url 'https://jitpack.io' }
 }
 
 dependencies {
