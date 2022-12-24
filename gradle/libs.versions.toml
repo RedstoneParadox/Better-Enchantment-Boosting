@@ -3,6 +3,7 @@
 minecraft = "1.19.3"
 quilt_mappings = "1.19.3+build.8"
 quilt_loader = "0.17.8"
+quilt_config = "1.0.0-beta.6"
 
 quilted_fabric_api = "5.0.0-alpha.6+0.69.1-1.19.3"
 
@@ -10,6 +11,7 @@ quilted_fabric_api = "5.0.0-alpha.6+0.69.1-1.19.3"
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 quilt_mappings = { module = "org.quiltmc:quilt-mappings", version.ref = "quilt_mappings" }
 quilt_loader = { module = "org.quiltmc:quilt-loader", version.ref = "quilt_loader" }
+quilt_config = { module = "org.quiltmc:quilt-config", version.ref = "quilt_config"}
 
 quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
 quilted_fabric_api_deprecated = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api-deprecated", version.ref = "quilted_fabric_api" }
