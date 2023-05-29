@@ -34,10 +34,10 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// modRuntimeOnly 'com.github.paulevsGitch:BCLib:1.2.5'
 	modCompileOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
-	modRuntimeOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
+	// modRuntimeOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
 
-	modCompileOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
-	modRuntimeOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
+	// modCompileOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
+	// modRuntimeOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
 }
 
 processResources {
