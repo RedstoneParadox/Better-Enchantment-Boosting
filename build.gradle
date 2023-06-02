@@ -12,6 +12,18 @@ group = project.maven_group
 
 repositories {
 	maven { url 'https://jitpack.io' }
+	maven {
+		name = "Ladysnake Mods"
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+	}
+	maven {
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/"
+	}
+	maven {
+		name = "Fuzs Mod Resources"
+		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+	}
 	exclusiveContent {
 		forRepository {
 			maven {
@@ -33,11 +45,25 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// modRuntimeOnly 'com.github.paulevsGitch:BCLib:1.2.5'
-	modCompileOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
-	// modRuntimeOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
 
-	// modCompileOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
-	// modRuntimeOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
+	// All this to verify that a single mixin to easy magic would work
+	modCompileOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
+	modCompileOnly "net.minecraftforge:forgeconfigapiport-fabric:4.2.11"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:4.1.0"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:4.1.0"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-block:4.1.0"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:4.1.0"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-world:4.1.0"
+
+	modRuntimeOnly "maven.modrinth:easy-magic:v4.3.3-1.19.2-Fabric"
+	modRuntimeOnly "maven.modrinth:puzzles-lib:v4.4.0-1.19.2-Fabric"
+	modRuntimeOnly "net.minecraftforge:forgeconfigapiport-fabric:4.2.11"
+	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:4.1.0"
+	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:4.1.0"
+	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-block:4.1.0"
+	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:4.1.0"
+	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-world:4.1.0"
+	modRuntimeOnly "com.terraformersmc:modmenu:4.1.2"
 }
 
 processResources {
