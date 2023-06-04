@@ -16,7 +16,7 @@ import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBooster;
 import java.util.List;
 import java.util.Optional;
 
-public class EnchantingUtil {
+public final class EnchantingUtil {
 	private static final TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:enchantment_power_transmitter"));
 
 	public static List<BlockPos> search(World world, BlockPos origin) {

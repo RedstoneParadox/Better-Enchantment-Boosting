@@ -11,7 +11,7 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 
-public class BetterEnchantmentBoosting implements ModInitializer {
+public final class BetterEnchantmentBoosting implements ModInitializer {
 	public static final String MODID = "betterenchantmentboosting";
 	public static final BetterEnchantmentBoostingConfig CONFIG = BetterEnchantmentBoostingConfig.load();
 
