@@ -22,12 +22,6 @@ public abstract class EnchantingTableBlockMixin {
 	@Inject(method = "randomDisplayTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockWithEntity;randomDisplayTick(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/random/RandomGenerator;)V"), cancellable = true)
 	private void randomDisplayTick(BlockState state, World world, BlockPos pos, RandomGenerator random, CallbackInfo ci) {
 		List<BlockPos> boosterPositions = EnchantingUtil.search(world, pos);
-		double power = EnchantingUtil.getPower(world, boosterPositions);
-
-		if (power < 1.0) {
-			ci.cancel();
-			return;
-		}
 
 		for (BlockPos boosterPosition: boosterPositions) {
 			BlockState boosterState = world.getBlockState(boosterPosition);
