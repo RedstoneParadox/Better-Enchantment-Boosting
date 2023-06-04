@@ -20,7 +20,7 @@ public class SearchUtil {
 		Box bounds = new Box(origin.add(-distance, depth, -distance), origin.add(distance, height, distance));
 		SearchArea area = new SearchArea();
 
-		area.setGrowthPredicate(state -> state.isIn(Tags.NON_BOOKSHELF_BLOCKING));
+		area.setGrowthPredicate(state -> state.isIn(Tags.ENCHANTMENT_POWER_TRANSMITTER));
 		area.setSearchPredicate(state -> state.isIn(Tags.ENCHANTMENT_BOOSTING));
 
 		return area.search(world, origin, bounds);
@@ -28,6 +28,6 @@ public class SearchUtil {
 
 	public static class Tags {
 		public static final TagKey<Block> ENCHANTMENT_BOOSTING = TagKey.of(Registries.BLOCK.getKey(), new Identifier(BetterEnchantmentBoosting.MODID, "enchantment_boosting"));
-		public static final TagKey<Block> NON_BOOKSHELF_BLOCKING = TagKey.of(Registries.BLOCK.getKey(), new Identifier(BetterEnchantmentBoosting.MODID, "non_bookshelf_blocking"));
+		public static final TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:enchantment_power_transmitter"));
 	}
 }
