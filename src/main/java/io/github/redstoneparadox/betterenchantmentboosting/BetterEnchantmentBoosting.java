@@ -19,5 +19,9 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 				TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:candles")),
 				new CandleBooster(0.25f)
 		);
+		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
+				TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:candle_cakes")),
+				new CandleBooster(0.25f)
+		);
 	}
 }
