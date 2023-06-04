@@ -12,14 +12,14 @@ import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBooster;
 import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBoosterType;
 import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBoosters;
 
-public record CandleBooster(float powerPerCandle) implements EnchantingBooster {
+public record CandleBooster(float power) implements EnchantingBooster {
 	public static final Codec<CandleBooster> CODEC = RecordCodecBuilder.create(instance ->
 					instance.group(
-							Codec.FLOAT.fieldOf("power_per_candle").forGetter(CandleBooster::powerPerCandle)
+							Codec.FLOAT.fieldOf("power").forGetter(CandleBooster::power)
 					).apply(instance, CandleBooster::new)
 			);
 	public static final EnchantingBoosterType TYPE = EnchantingBoosters.register(
-			new Identifier(BetterEnchantmentBoosting.MODID, "candle_booster"),
+			new Identifier(BetterEnchantmentBoosting.MODID, "candle"),
 			CODEC
 	);
 
@@ -29,10 +29,10 @@ public record CandleBooster(float powerPerCandle) implements EnchantingBooster {
 		if (!state.contains(Properties.LIT)) return 0;
 
 		if (state.contains(Properties.CANDLES)) {
-			return powerPerCandle * state.get(Properties.CANDLES);
+			return power * state.get(Properties.CANDLES);
 		}
 
-		return powerPerCandle; // Assume that it's a single-candle block
+		return power; // Assume that it's a single-candle block
 	}
 
 	@Override

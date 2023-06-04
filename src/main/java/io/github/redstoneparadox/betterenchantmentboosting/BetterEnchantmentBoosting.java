@@ -1,8 +1,13 @@
 package io.github.redstoneparadox.betterenchantmentboosting;
 
 import io.github.redstoneparadox.betterenchantmentboosting.config.BetterEnchantmentBoostingConfig;
+import io.github.redstoneparadox.betterenchantmentboosting.util.CandleBooster;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 
 public class BetterEnchantmentBoosting implements ModInitializer {
 	public static final String MODID = "betterenchantmentboosting";
@@ -10,6 +15,9 @@ public class BetterEnchantmentBoosting implements ModInitializer {
 
 	@Override
 	public void onInitialize(ModContainer mod) {
-
+		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
+				TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:candles")),
+				new CandleBooster(0.25f)
+		);
 	}
 }

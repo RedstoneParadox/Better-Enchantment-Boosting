@@ -1,7 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 
-import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantmentTableBooster;
-import io.github.redstoneparadox.betterenchantmentboosting.util.SearchUtil;
+import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantingUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.inventory.Inventory;
@@ -49,8 +48,8 @@ public abstract class EnchantmentScreenHandlerMixin {
 		ItemStack stack = onContentChangedStack;
 		onContentChangedStack = ItemStack.EMPTY;
 
-		List<BlockPos> bookshelfPositions = SearchUtil.search(world, pos);
-		double power = EnchantmentTableBooster.getPower(world, bookshelfPositions);
+		List<BlockPos> bookshelfPositions = EnchantingUtil.search(world, pos);
+		double power = EnchantingUtil.getPower(world, bookshelfPositions);
 
 		random.setSeed(seed.get());
 		for (int j = 0; j < 3; ++j) {

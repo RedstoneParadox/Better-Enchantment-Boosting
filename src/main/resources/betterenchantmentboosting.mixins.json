@@ -4,8 +4,6 @@
   "package": "io.github.redstoneparadox.betterenchantmentboosting.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AbstractBlockMixin",
-    "AbstractCandleBlockMixin",
     "EnchantingTableBlockMixin",
     "EnchantmentScreenHandlerMixin"
   ],
