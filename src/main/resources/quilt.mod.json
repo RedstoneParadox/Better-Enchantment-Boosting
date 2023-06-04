@@ -27,8 +27,8 @@
         "versions": ">=0.17.6-"
       },
       {
-        "id": "quilted_fabric_api",
-        "versions": ">=5.0.0-"
+        "id": "quilt_base",
+        "versions": ">=6.0.0-"
       },
       {
         "id": "minecraft",
