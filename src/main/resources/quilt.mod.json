@@ -31,8 +31,12 @@
         "versions": ">=6.0.0-"
       },
       {
+        "id": "quilt_block_content_registry",
+        "versions": ">=6.0.0-"
+      },
+      {
         "id": "minecraft",
-        "versions": ">=1.19.3"
+        "versions": ">=1.20-"
       }
     ]
   },
