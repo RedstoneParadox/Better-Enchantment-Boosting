@@ -11,6 +11,7 @@ import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,7 +31,7 @@ public record BetterEnchantmentBoostingConfig(boolean candleBoosting, double pow
 	);
 
 	public static BetterEnchantmentBoostingConfig load() {
-		File file = new File(FabricLoader.getInstance().getConfigDir().toFile(), "betterenchantmentboosting.json");
+		File file = new File(QuiltLoader.getConfigDir().toFile(), "betterenchantmentboosting.json");
 
 		if (file.exists()) {
 			try {
