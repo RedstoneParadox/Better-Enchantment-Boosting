@@ -5,6 +5,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.Property;
@@ -48,8 +49,8 @@ public abstract class EnchantmentScreenHandlerMixin {
 		ItemStack stack = onContentChangedStack;
 		onContentChangedStack = ItemStack.EMPTY;
 
-		List<BlockPos> bookshelfPositions = EnchantingUtil.search(world, pos);
-		double power = EnchantingUtil.getPower(world, bookshelfPositions);
+		List<BlockPos> boosterPositions = EnchantingUtil.search(world, pos);
+		double power = EnchantingUtil.getPower(world, boosterPositions);
 
 		random.setSeed(seed.get());
 		for (int j = 0; j < 3; ++j) {
@@ -67,5 +68,15 @@ public abstract class EnchantmentScreenHandlerMixin {
 			self.enchantmentLevel[j] = enchantmentLevelEntry.level;
 		}
 		self.sendContentUpdates();
+	}
+
+	private List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int level, List<BlockPos> boosterPositions) {
+		random.setSeed(seed.get() + slot);
+		List<EnchantmentLevelEntry> list = EnchantmentHelper.generateEnchantments(this.random, stack, level, false);
+		if (stack.isOf(Items.BOOK) && list.size() > 1) {
+			list.remove(random.nextInt(list.size()));
+		}
+
+		return list;
 	}
 }
