@@ -53,19 +53,27 @@ public abstract class EnchantmentScreenHandlerMixin {
 		double power = EnchantingUtil.getPower(world, boosterPositions);
 
 		random.setSeed(seed.get());
-		for (int j = 0; j < 3; ++j) {
-			self.enchantmentPower[j] = EnchantmentHelper.calculateRequiredExperienceLevel(random, j, (int) power, stack);
-			self.enchantmentId[j] = -1;
-			self.enchantmentLevel[j] = -1;
-			if (self.enchantmentPower[j] >= j + 1) continue;
-			self.enchantmentPower[j] = 0;
+		for (int slot = 0; slot < 3; ++slot) {
+			self.enchantmentPower[slot] = EnchantmentHelper.calculateRequiredExperienceLevel(random, slot, (int) power, stack);
+			self.enchantmentId[slot] = -1;
+			self.enchantmentLevel[slot] = -1;
+			if (self.enchantmentPower[slot] >= slot + 1) continue;
+			self.enchantmentPower[slot] = 0;
 		}
-		for (int j = 0; j < 3; ++j) {
-			List<EnchantmentLevelEntry> list;
-			if (self.enchantmentPower[j] <= 0 || (list = generateEnchantments(stack, j, self.enchantmentPower[j])) == null || list.isEmpty()) continue;
+		for (int slot = 0; slot < 3; ++slot) {
+			List<EnchantmentLevelEntry> list = EnchantingUtil.generateEnchantments(
+					stack,
+					slot,
+					self.enchantmentPower[slot],
+					random,
+					seed.get(),
+					world,
+					boosterPositions
+			);
+			if (self.enchantmentPower[slot] <= 0 || list == null || list.isEmpty()) continue;
 			EnchantmentLevelEntry enchantmentLevelEntry = list.get(random.nextInt(list.size()));
-			self.enchantmentId[j] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
-			self.enchantmentLevel[j] = enchantmentLevelEntry.level;
+			self.enchantmentId[slot] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
+			self.enchantmentLevel[slot] = enchantmentLevelEntry.level;
 		}
 		self.sendContentUpdates();
 	}
