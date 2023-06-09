@@ -1,6 +1,5 @@
 package io.github.redstoneparadox.betterenchantmentboosting.util;
 
-import com.google.common.collect.Lists;
 import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,13 +8,9 @@ import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -72,7 +67,7 @@ public final class EnchantingUtil {
 
 	public static List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int level, RandomGenerator random, int seed, World world, List<BlockPos> boosterPositions) {
 		random.setSeed(seed + slot);
-		List<EnchantmentLevelEntry> baseEntries = getEntriesFromInfluencers(world, boosterPositions);
+		List<EnchantmentLevelEntry> baseEntries = getEntriesFromInfluencers(stack, random, world, boosterPositions);
 		List<EnchantmentLevelEntry> list = generateEnchantments(random, stack, level, false, baseEntries);
 		if (stack.isOf(Items.BOOK) && list.size() > 1) {
 			list.remove(random.nextInt(list.size()));
@@ -81,7 +76,7 @@ public final class EnchantingUtil {
 		return list;
 	}
 
-	public static List<EnchantmentLevelEntry> getEntriesFromInfluencers(World world, List<BlockPos> boosterPositions) {
+	public static List<EnchantmentLevelEntry> getEntriesFromInfluencers(ItemStack stack, RandomGenerator random, World world, List<BlockPos> boosterPositions) {
 		Map<Enchantment, Integer> map = new HashMap<>();
 		List<EnchantmentLevelEntry> bonusEntries = new ArrayList<>();
 
@@ -93,23 +88,24 @@ public final class EnchantingUtil {
 				assert blockEntity != null;
 
 				for (int i = 0; i < 6; i++) {
-					ItemStack stack = blockEntity.getStack(i);
+					ItemStack bookStack = blockEntity.getStack(i);
 
-					if (stack.isOf(Items.ENCHANTED_BOOK)) {
-						NbtList enchantments = EnchantedBookItem.getEnchantmentNbt(stack);
+					if (bookStack.isOf(Items.ENCHANTED_BOOK)) {
+						Map<Enchantment, Integer> bookEnchantmentMap = EnchantmentHelper.get(bookStack);
+						List<Enchantment> possibleEnchantments = new ArrayList<>();
 
-						for (NbtElement element: enchantments) {
-							if (element instanceof NbtCompound) {
-								int level = ((NbtCompound) element).getInt("lvl");
-								String id = ((NbtCompound) element).getString("id");
-								Enchantment enchantment = Registries.ENCHANTMENT.get(new Identifier(id));
-
-								if (!map.containsKey(enchantment)) map.put(enchantment, 0);
-
-								int total = map.get(enchantment);
-								map.put(enchantment, total + level);
-							}
+						for (Enchantment enchantment : bookEnchantmentMap.keySet()) {
+							if (!enchantment.type.isAcceptableItem(stack.getItem()) || enchantment.isTreasure()) map.remove(enchantment);
+							else possibleEnchantments.add(enchantment);
 						}
+
+						Enchantment enchantment = possibleEnchantments.get(random.nextInt(possibleEnchantments.size()));
+						int level = bookEnchantmentMap.get(enchantment);
+
+						if (!map.containsKey(enchantment)) map.put(enchantment, 0);
+
+						int total = map.get(enchantment);
+						map.put(enchantment, total + level);
 					}
 				}
 			}
