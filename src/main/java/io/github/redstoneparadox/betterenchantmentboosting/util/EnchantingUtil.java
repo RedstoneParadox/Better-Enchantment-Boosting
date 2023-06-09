@@ -117,6 +117,7 @@ public final class EnchantingUtil {
 
 			while (remaining >= cost) {
 				bonusEntries.add(new EnchantmentLevelEntry(key, 1));
+				remaining -= cost;
 
 				if (cost == 1) cost = 3;
 				else cost += 3;
