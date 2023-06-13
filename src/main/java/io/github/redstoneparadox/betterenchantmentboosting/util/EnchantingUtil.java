@@ -66,10 +66,10 @@ public final class EnchantingUtil {
 		return power;
 	}
 
-	public static List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int level, RandomGenerator random, int seed, World world, List<BlockPos> boosterPositions) {
+	public static List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int power, RandomGenerator random, int seed, World world, List<BlockPos> boosterPositions) {
 		random.setSeed(seed + slot);
-		List<EnchantmentLevelEntry> baseEntries = getEntriesFromInfluencers(stack, random, world, boosterPositions);
-		List<EnchantmentLevelEntry> list = generateEnchantments(random, stack, level, false, baseEntries);
+		List<EnchantmentLevelEntry> baseEntries = getEntriesFromInfluencers(stack, power, random, world, boosterPositions);
+		List<EnchantmentLevelEntry> list = generateEnchantments(random, stack, power, false, baseEntries);
 		if (stack.isOf(Items.BOOK) && list.size() > 1) {
 			list.remove(random.nextInt(list.size()));
 		}
@@ -77,7 +77,7 @@ public final class EnchantingUtil {
 		return list;
 	}
 
-	public static List<EnchantmentLevelEntry> getEntriesFromInfluencers(ItemStack stack, RandomGenerator random, World world, List<BlockPos> boosterPositions) {
+	public static List<EnchantmentLevelEntry> getEntriesFromInfluencers(ItemStack stack, int power, RandomGenerator random, World world, List<BlockPos> boosterPositions) {
 		Map<Enchantment, Integer> map = new HashMap<>();
 		List<EnchantmentLevelEntry> bonusEntries = new ArrayList<>();
 
@@ -101,47 +101,52 @@ public final class EnchantingUtil {
 						}
 
 						Enchantment enchantment = possibleEnchantments.get(random.nextInt(possibleEnchantments.size()));
-						int level = bookEnchantmentMap.get(enchantment);
+						int enchantmentLevel = bookEnchantmentMap.get(enchantment);
 
 						if (!map.containsKey(enchantment)) map.put(enchantment, 0);
 
 						int total = map.get(enchantment);
-						map.put(enchantment, total + level);
+						map.put(enchantment, total + enchantmentLevel);
 					}
 				}
 			}
 		}
 
-		map.forEach((key, value) -> {
+		map.forEach((enchantment, totalLevels) -> {
 			int cost = 1;
-			int remaining = value;
+			int remaining = totalLevels;
 
 			while (remaining >= cost) {
-				bonusEntries.add(new EnchantmentLevelEntry(key, 1));
-				remaining -= cost;
 
-				if (cost == 1) cost = 3;
-				else cost += 3;
+				for(int level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
+					if (power >= enchantment.getMinPower(level) && power <= enchantment.getMaxPower(level)) {
+						bonusEntries.add(new EnchantmentLevelEntry(enchantment, level));
+						remaining -= cost;
+
+						if (cost == 1) cost = 3;
+						else cost += 3;
+					}
+				}
 			}
 		});
 
 		return bonusEntries;
 	}
 
-	public static List<EnchantmentLevelEntry> generateEnchantments(RandomGenerator random, ItemStack stack, int level, boolean treasureAllowed, List<EnchantmentLevelEntry> bonusEntries) {
+	public static List<EnchantmentLevelEntry> generateEnchantments(RandomGenerator random, ItemStack stack, int power, boolean treasureAllowed, List<EnchantmentLevelEntry> bonusEntries) {
 		List<EnchantmentLevelEntry> chosenEntries = Lists.newArrayList();
 		Item item = stack.getItem();
 		int enchantability = item.getEnchantability();
 		if (enchantability > 0) {
-			level += 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
+			power += 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
 			float f = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F;
-			level = MathHelper.clamp(Math.round((float) level + (float) level * f), 1, Integer.MAX_VALUE);
-			List<EnchantmentLevelEntry> possibleEntries = EnchantmentHelper.getPossibleEntries(level, stack, treasureAllowed);
+			power = MathHelper.clamp(Math.round((float) power + (float) power * f), 1, Integer.MAX_VALUE);
+			List<EnchantmentLevelEntry> possibleEntries = EnchantmentHelper.getPossibleEntries(power, stack, treasureAllowed);
 			possibleEntries.addAll(bonusEntries);
 			if (!possibleEntries.isEmpty()) {
 				Weighting.getRandomItem(random, possibleEntries).ifPresent(chosenEntries::add);
 
-				while (random.nextInt(50) <= level) {
+				while (random.nextInt(50) <= power) {
 					if (!chosenEntries.isEmpty()) {
 						EnchantmentHelper.removeConflicts(possibleEntries, Util.getLast(chosenEntries));
 					}
@@ -151,7 +156,7 @@ public final class EnchantingUtil {
 					}
 
 					Weighting.getRandomItem(random, possibleEntries).ifPresent(chosenEntries::add);
-					level /= 2;
+					power /= 2;
 				}
 			}
 
