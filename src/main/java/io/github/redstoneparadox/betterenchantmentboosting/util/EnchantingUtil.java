@@ -1,5 +1,6 @@
 package io.github.redstoneparadox.betterenchantmentboosting.util;
 
+import com.google.common.collect.Lists;
 import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -127,7 +128,8 @@ public final class EnchantingUtil {
 		return bonusEntries;
 	}
 
-	public static List<EnchantmentLevelEntry> generateEnchantments(RandomGenerator random, ItemStack stack, int level, boolean treasureAllowed, List<EnchantmentLevelEntry> entries) {
+	public static List<EnchantmentLevelEntry> generateEnchantments(RandomGenerator random, ItemStack stack, int level, boolean treasureAllowed, List<EnchantmentLevelEntry> bonusEntries) {
+		List<EnchantmentLevelEntry> chosenEntries = Lists.newArrayList();
 		Item item = stack.getItem();
 		int enchantability = item.getEnchantability();
 		if (enchantability > 0) {
@@ -135,24 +137,25 @@ public final class EnchantingUtil {
 			float f = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F;
 			level = MathHelper.clamp(Math.round((float) level + (float) level * f), 1, Integer.MAX_VALUE);
 			List<EnchantmentLevelEntry> possibleEntries = EnchantmentHelper.getPossibleEntries(level, stack, treasureAllowed);
+			possibleEntries.addAll(bonusEntries);
 			if (!possibleEntries.isEmpty()) {
-				Weighting.getRandomItem(random, possibleEntries).ifPresent(entries::add);
+				Weighting.getRandomItem(random, possibleEntries).ifPresent(chosenEntries::add);
 
 				while (random.nextInt(50) <= level) {
-					if (!entries.isEmpty()) {
-						EnchantmentHelper.removeConflicts(possibleEntries, Util.getLast(entries));
+					if (!chosenEntries.isEmpty()) {
+						EnchantmentHelper.removeConflicts(possibleEntries, Util.getLast(chosenEntries));
 					}
 
 					if (possibleEntries.isEmpty()) {
 						break;
 					}
 
-					Weighting.getRandomItem(random, possibleEntries).ifPresent(entries::add);
+					Weighting.getRandomItem(random, possibleEntries).ifPresent(chosenEntries::add);
 					level /= 2;
 				}
 			}
 
 		}
-		return entries;
+		return chosenEntries;
 	}
 }
