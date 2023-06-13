@@ -60,7 +60,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 		lambdaWorld = world;
 	}
 
-	@Redirect(method = "method_17410", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/screen/EnchantmentScreenHandler;generateEnchantments(Lnet/minecraft/item/ItemStack;II)Ljava/util/List;"))
+	@Redirect(method = "method_17410", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/EnchantmentScreenHandler;generateEnchantments(Lnet/minecraft/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentLevelEntry> redirectGenerateEnchantmentsCall(EnchantmentScreenHandler instance, ItemStack stack, int slot, int level) {
 		List<EnchantmentLevelEntry> entries = EnchantingUtil.generateEnchantments(
 				stack,
