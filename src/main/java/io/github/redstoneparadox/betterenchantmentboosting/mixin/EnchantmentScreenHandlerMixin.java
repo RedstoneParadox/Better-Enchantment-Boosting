@@ -3,6 +3,7 @@ package io.github.redstoneparadox.betterenchantmentboosting.mixin;
 import io.github.redstoneparadox.betterenchantmentboosting.util.EnchantingUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -33,6 +34,7 @@ import java.util.function.BiConsumer;
 public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 	@Unique ItemStack onContentChangedStack = ItemStack.EMPTY;
 	@Unique List<BlockPos> boosterPositions = new ArrayList<>();
+	@Unique World lambdaWorld = null;
 	@Shadow @Final private RandomGenerator random;
 	@Shadow @Final private Property seed;
 	@Shadow @Final public int[] enchantmentPower;
@@ -53,17 +55,24 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 		args.set(0, (BiConsumer<World, BlockPos>) this::bookshelfSearch);
 	}
 
+	@Inject(method = "method_17410", at = @At("HEAD"))
+	private void captureWorld(ItemStack itemStack, int i, PlayerEntity playerEntity, int j, ItemStack itemStack2, World world, BlockPos pos, CallbackInfo ci) {
+		lambdaWorld = world;
+	}
+
 	@Redirect(method = "method_17410", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/screen/EnchantmentScreenHandler;generateEnchantments(Lnet/minecraft/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentLevelEntry> redirectGenerateEnchantmentsCall(EnchantmentScreenHandler instance, ItemStack stack, int slot, int level) {
-		return EnchantingUtil.generateEnchantments(
+		List<EnchantmentLevelEntry> entries = EnchantingUtil.generateEnchantments(
 				stack,
 				slot,
 				enchantmentPower[slot],
 				random,
 				seed.get(),
-				world,
+				lambdaWorld,
 				boosterPositions
 		);
+		lambdaWorld = null;
+		return entries;
 	}
 
 	private void bookshelfSearch(World world, BlockPos pos) {
