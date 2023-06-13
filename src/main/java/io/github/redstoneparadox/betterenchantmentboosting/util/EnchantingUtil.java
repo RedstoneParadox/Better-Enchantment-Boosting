@@ -116,17 +116,26 @@ public final class EnchantingUtil {
 			int cost = 1;
 			int remaining = totalLevels;
 
-			while (remaining >= cost) {
+			int entryLevel = 1;
 
-				for(int level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
-					if (power >= enchantment.getMinPower(level) && power <= enchantment.getMaxPower(level)) {
-						bonusEntries.add(new EnchantmentLevelEntry(enchantment, level));
-						remaining -= cost;
+			System.out.println(enchantment);
 
-						if (cost == 1) cost = 3;
-						else cost += 3;
-					}
+
+			for(int level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
+				System.out.println(enchantment.getMinPower(level));
+				System.out.println(enchantment.getMaxPower(level));
+				if (power >= enchantment.getMinPower(level) && power <= enchantment.getMaxPower(level)) {
+					entryLevel = level;
+					break;
 				}
+			}
+
+			while (remaining >= cost) {
+				bonusEntries.add(new EnchantmentLevelEntry(enchantment, entryLevel));
+				remaining -= cost;
+
+				if (cost == 1) cost = 3;
+				else cost += 3;
 			}
 		});
 
