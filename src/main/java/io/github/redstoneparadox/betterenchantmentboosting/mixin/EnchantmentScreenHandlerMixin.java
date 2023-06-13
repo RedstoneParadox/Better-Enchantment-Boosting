@@ -18,23 +18,16 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
-	@Unique ItemStack onContentChangedStack = ItemStack.EMPTY;
-	@Unique List<BlockPos> boosterPositions = new ArrayList<>();
-	@Unique World lambdaWorld = null;
 	@Shadow @Final private RandomGenerator random;
 	@Shadow @Final private Property seed;
 	@Shadow @Final public int[] enchantmentPower;
@@ -45,41 +38,29 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 		super(type, syncId);
 	}
 
-	@Inject(method = "onContentChanged", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/inventory/Inventory;getStack(I)Lnet/minecraft/item/ItemStack;"))
-	private void onContentChanged_GetStack(Inventory inventory, CallbackInfo ci) {
-		onContentChangedStack = inventory.getStack(0);
-	}
-
 	@ModifyArgs(method = "onContentChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandlerContext;run(Ljava/util/function/BiConsumer;)V"))
-	private void onContentChanged_CallRun(Args args) {
-		args.set(0, (BiConsumer<World, BlockPos>) this::bookshelfSearch);
-	}
-
-	@Inject(method = "method_17410", at = @At("HEAD"))
-	private void captureWorld(ItemStack itemStack, int i, PlayerEntity playerEntity, int j, ItemStack itemStack2, World world, BlockPos pos, CallbackInfo ci) {
-		lambdaWorld = world;
+	private void onContentChanged_CallRun(Args args, Inventory inventory) {
+		ItemStack stack = inventory.getStack(0);
+		args.set(0, (BiConsumer<World, BlockPos>) (world, pos) -> bookshelfSearch(stack, world, pos));
 	}
 
 	@Redirect(method = "method_17410", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/EnchantmentScreenHandler;generateEnchantments(Lnet/minecraft/item/ItemStack;II)Ljava/util/List;"))
-	private List<EnchantmentLevelEntry> redirectGenerateEnchantmentsCall(EnchantmentScreenHandler instance, ItemStack stack, int slot, int level) {
-		List<EnchantmentLevelEntry> entries = EnchantingUtil.generateEnchantments(
+	private List<EnchantmentLevelEntry> redirectGenerateEnchantmentsCall(EnchantmentScreenHandler instance, ItemStack stack, int slot, int level, ItemStack itemStack, int int1, PlayerEntity playerEntity, int int2, ItemStack itemStack2, World world, BlockPos pos) {
+		List<BlockPos> boosterPositions = EnchantingUtil.search(world, pos);
+
+		return EnchantingUtil.generateEnchantments(
 				stack,
 				slot,
 				enchantmentPower[slot],
 				random,
 				seed.get(),
-				lambdaWorld,
+				world,
 				boosterPositions
 		);
-		lambdaWorld = null;
-		return entries;
 	}
 
-	private void bookshelfSearch(World world, BlockPos pos) {
-		ItemStack stack = onContentChangedStack;
-		onContentChangedStack = ItemStack.EMPTY;
-
-		boosterPositions = EnchantingUtil.search(world, pos);
+	private void bookshelfSearch(ItemStack stack, World world, BlockPos pos) {
+		List<BlockPos> boosterPositions = EnchantingUtil.search(world, pos);
 		double power = EnchantingUtil.getPower(world, boosterPositions);
 
 		random.setSeed(seed.get());
@@ -100,7 +81,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 					world,
 					boosterPositions
 			);
-			if (enchantmentPower[slot] <= 0 || list == null || list.isEmpty()) continue;
+			if (enchantmentPower[slot] <= 0 || list.isEmpty()) continue;
 			EnchantmentLevelEntry enchantmentLevelEntry = list.get(random.nextInt(list.size()));
 			enchantmentId[slot] = Registries.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
 			enchantmentLevel[slot] = enchantmentLevelEntry.level;
