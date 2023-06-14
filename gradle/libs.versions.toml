@@ -23,4 +23,4 @@ quilt_standard_libraries = { module = "org.quiltmc:qsl", version.ref = "quilt_st
 # quilted_fabric_api = ["quilted_fabric_api", "quilted_fabric_api_deprecated"]
 
 [plugins]
-quilt_loom = { id = "org.quiltmc.loom", version = "1.1.+" }
+quilt_loom = { id = "org.quiltmc.loom", version = "1.2.+" }
