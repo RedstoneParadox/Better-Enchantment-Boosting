@@ -117,18 +117,11 @@ public final class EnchantingUtil {
 
 		map.forEach((enchantment, totalLevels) -> {
 			int power2 = power + 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
-
 			int cost = 1;
 			int remaining = totalLevels;
-
 			int entryLevel = 1;
 
-			System.out.println(enchantment);
-
-
 			for(int level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
-				System.out.println(enchantment.getMinPower(level));
-				System.out.println(enchantment.getMaxPower(level));
 				if (power2 >= enchantment.getMinPower(level) && power2 <= enchantment.getMaxPower(level)) {
 					entryLevel = level;
 					break;
