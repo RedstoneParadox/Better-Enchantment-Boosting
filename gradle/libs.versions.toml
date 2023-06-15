@@ -1,12 +1,12 @@
 [versions]
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
-minecraft = "1.20.1"
-quilt_mappings = "1.20.1+build.1"
+minecraft = "1.20"
+quilt_mappings = "1.20+build.4"
 quilt_loader = "0.19.0"
 quilt_config = "1.1.0-beta.1"
 
-quilted_fabric_api = "5.0.0-alpha.8+0.71.0-1.19.3"
-quilt_standard_libraries = "6.0.3+1.20.1"
+quilted_fabric_api = "7.0.1+0.83.0-1.20"
+quilt_standard_libraries = "6.0.1+1.20"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -14,6 +14,7 @@ quilt_mappings = { module = "org.quiltmc:quilt-mappings", version.ref = "quilt_m
 quilt_loader = { module = "org.quiltmc:quilt-loader", version.ref = "quilt_loader" }
 quilt_config = { module = "org.quiltmc:quilt-config", version.ref = "quilt_config" }
 quilt_standard_libraries = { module = "org.quiltmc:qsl", version.ref = "quilt_standard_libraries" }
+quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
 
 # quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
 # quilted_fabric_api_deprecated = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api-deprecated", version.ref = "quilted_fabric_api" }

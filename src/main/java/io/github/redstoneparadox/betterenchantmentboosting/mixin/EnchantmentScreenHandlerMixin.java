@@ -29,7 +29,8 @@ import java.util.function.BiConsumer;
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 	@Shadow @Final private RandomGenerator random;
-	@Shadow @Final private Property seed;
+	@Shadow @Final
+	public Property seed;
 	@Shadow @Final public int[] enchantmentPower;
 	@Shadow @Final public int[] enchantmentId;
 	@Shadow @Final public int[] enchantmentLevel = new int[]{-1, -1, -1};
