@@ -35,9 +35,9 @@ public final class EnchantingUtil {
 	private static final TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:enchantment_power_transmitter"));
 
 	public static List<BlockPos> search(World world, BlockPos origin) {
-		int distance = BetterEnchantmentBoosting.CONFIG.bounds().distance();
-		int height = BetterEnchantmentBoosting.CONFIG.bounds().height();
-		int depth = BetterEnchantmentBoosting.CONFIG.bounds().depth();
+		int distance = BetterEnchantmentBoosting.CONFIG.boundsConfig().distance();
+		int height = BetterEnchantmentBoosting.CONFIG.boundsConfig().height();
+		int depth = BetterEnchantmentBoosting.CONFIG.boundsConfig().depth();
 		Box bounds = new Box(origin.add(-distance, depth, -distance), origin.add(distance, height, distance));
 		SearchArea area = new SearchArea();
 
@@ -81,6 +81,8 @@ public final class EnchantingUtil {
 		Map<Enchantment, Integer> map = new HashMap<>();
 		List<EnchantmentLevelEntry> bonusEntries = new ArrayList<>();
 
+		if (!BetterEnchantmentBoosting.CONFIG.influencingConfig().enabled()) return bonusEntries;
+
 		for (BlockPos boosterPosition: boosterPositions) {
 			BlockState boosterState = world.getBlockState(boosterPosition);
 
@@ -96,7 +98,10 @@ public final class EnchantingUtil {
 						List<Enchantment> possibleEnchantments = new ArrayList<>();
 
 						for (Enchantment enchantment : bookEnchantmentMap.keySet()) {
-							if (!enchantment.type.isAcceptableItem(stack.getItem()) || enchantment.isTreasure()) map.remove(enchantment);
+							if (!enchantment.type.isAcceptableItem(stack.getItem())
+									|| (enchantment.isTreasure() && BetterEnchantmentBoosting.CONFIG.influencingConfig().allowTreasure())
+									|| (enchantment.isCursed() && BetterEnchantmentBoosting.CONFIG.influencingConfig().allowCurses())
+							) map.remove(enchantment);
 							else possibleEnchantments.add(enchantment);
 						}
 

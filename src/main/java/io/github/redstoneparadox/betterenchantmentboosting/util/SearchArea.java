@@ -46,7 +46,7 @@ public final class SearchArea {
 
 							BlockPos blockPos = origin.add(nxtX, nxtY, nxtZ);
 
-							// Make sure the cell is within bounds and is empty
+							// Make sure the cell is within boundsConfig and is empty
 							if (nxtX >= minX && nxtX <= maxX && nxtY >= minY && nxtY <= maxY && nxtZ >= minZ && nxtZ <= maxZ && cells.get(nxtX, nxtY, nxtZ) == CellState.EMPTY) {
 								BlockState state = world.getBlockState(blockPos);
 

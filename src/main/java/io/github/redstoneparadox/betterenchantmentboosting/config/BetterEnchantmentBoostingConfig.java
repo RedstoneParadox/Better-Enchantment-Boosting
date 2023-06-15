@@ -10,7 +10,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import org.quiltmc.loader.api.QuiltLoader;
 
 import java.io.BufferedWriter;
@@ -19,16 +18,37 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 
-public record BetterEnchantmentBoostingConfig(boolean candleBoosting, double powerPerCandle, BoundsConfig bounds) {
+public record BetterEnchantmentBoostingConfig(EnchantmentInfluencingConfig influencingConfig, BoundsConfig boundsConfig) {
 	public static final Codec<BetterEnchantmentBoostingConfig> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
-							Codec.BOOL.fieldOf("candle_boosting").forGetter(config -> config.candleBoosting),
-							Codec.DOUBLE.fieldOf("power_per_candle").forGetter(config -> config.powerPerCandle),
-							BoundsConfig.CODEC.fieldOf("bounds").forGetter(config -> config.bounds)
+							EnchantmentInfluencingConfig.CODEC.fieldOf("enchantment_influencing").forGetter(config -> config.influencingConfig),
+							BoundsConfig.CODEC.fieldOf("bounds").forGetter(config -> config.boundsConfig)
 					)
 					.apply(instance, BetterEnchantmentBoostingConfig::new)
 
 	);
+
+	public record EnchantmentInfluencingConfig(boolean enabled, boolean allowTreasure, boolean allowCurses) {
+		public static final Codec<EnchantmentInfluencingConfig> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+						Codec.BOOL.fieldOf("enabled").forGetter(config -> config.enabled),
+						Codec.BOOL.fieldOf("allow_treasure").forGetter(config -> config.allowTreasure),
+						Codec.BOOL.fieldOf("allow_curses").forGetter(config -> config.allowCurses)
+				)
+						.apply(instance, EnchantmentInfluencingConfig::new)
+		);
+	}
+
+	public record BoundsConfig(int distance, int height, int depth) {
+		public static final Codec<BoundsConfig> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								Codec.INT.fieldOf("distance").forGetter(config -> config.distance),
+								Codec.INT.fieldOf("height").forGetter(config -> config.height),
+								Codec.INT.fieldOf("depth").forGetter(config -> config.depth)
+						)
+						.apply(instance, BoundsConfig::new)
+		);
+	}
 
 	public static BetterEnchantmentBoostingConfig load() {
 		File file = new File(QuiltLoader.getConfigDir().toFile(), "betterenchantmentboosting.json");
@@ -50,8 +70,9 @@ public record BetterEnchantmentBoostingConfig(boolean candleBoosting, double pow
 			}
 		}
 
+		var influencing = new EnchantmentInfluencingConfig(false, false, false);
 		var bounds = new BoundsConfig(3, 2, -1);
-		var config = new BetterEnchantmentBoostingConfig(false, 0.25, bounds);
+		var config = new BetterEnchantmentBoostingConfig(influencing, bounds);
 
 		var result = CODEC.encodeStart(JsonOps.INSTANCE, config).result();
 
