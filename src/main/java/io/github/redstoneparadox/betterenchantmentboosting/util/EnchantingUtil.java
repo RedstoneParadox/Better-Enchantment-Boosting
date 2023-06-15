@@ -38,7 +38,7 @@ public final class EnchantingUtil {
 		int distance = BetterEnchantmentBoosting.CONFIG.boundsConfig().distance();
 		int height = BetterEnchantmentBoosting.CONFIG.boundsConfig().height();
 		int depth = BetterEnchantmentBoosting.CONFIG.boundsConfig().depth();
-		Box bounds = new Box(origin.add(-distance, depth, -distance), origin.add(distance, height, distance));
+		Box bounds = new Box(origin.add(-distance, -depth, -distance), origin.add(distance, height, distance));
 		SearchArea area = new SearchArea();
 
 		area.setGrowthPredicate(state ->

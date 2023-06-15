@@ -46,7 +46,9 @@ public record BetterEnchantmentBoostingConfig(EnchantmentInfluencingConfig influ
 								Codec.INT.fieldOf("height").forGetter(config -> config.height),
 								Codec.INT.fieldOf("depth").forGetter(config -> config.depth)
 						)
-						.apply(instance, BoundsConfig::new)
+						.apply(instance, (distance, height, depth) ->
+								new BoundsConfig(Math.abs(distance), Math.abs(height), Math.abs(depth))
+						)
 		);
 	}
 
