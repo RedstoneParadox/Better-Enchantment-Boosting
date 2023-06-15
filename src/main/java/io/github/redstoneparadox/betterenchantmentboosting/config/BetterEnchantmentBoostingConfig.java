@@ -18,11 +18,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 
-public record BetterEnchantmentBoostingConfig(EnchantmentInfluencingConfig influencingConfig, BoundsConfig boundsConfig) {
+public record BetterEnchantmentBoostingConfig(EnchantmentInfluencingConfig influencingConfig, SearchAreaConfig searchAreaConfig) {
 	public static final Codec<BetterEnchantmentBoostingConfig> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
 							EnchantmentInfluencingConfig.CODEC.fieldOf("enchantment_influencing").forGetter(config -> config.influencingConfig),
-							BoundsConfig.CODEC.fieldOf("bounds").forGetter(config -> config.boundsConfig)
+							SearchAreaConfig.CODEC.fieldOf("search_area").forGetter(config -> config.searchAreaConfig)
 					)
 					.apply(instance, BetterEnchantmentBoostingConfig::new)
 
@@ -39,15 +39,15 @@ public record BetterEnchantmentBoostingConfig(EnchantmentInfluencingConfig influ
 		);
 	}
 
-	public record BoundsConfig(int distance, int height, int depth) {
-		public static final Codec<BoundsConfig> CODEC = RecordCodecBuilder.create(
+	public record SearchAreaConfig(int horizontalBlocksFromTable, int blocksAboveTable, int blocksBelowTable) {
+		public static final Codec<SearchAreaConfig> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
-								Codec.INT.fieldOf("distance").forGetter(config -> config.distance),
-								Codec.INT.fieldOf("height").forGetter(config -> config.height),
-								Codec.INT.fieldOf("depth").forGetter(config -> config.depth)
+								Codec.INT.fieldOf("horizontal_blocks_from_table").forGetter(config -> config.horizontalBlocksFromTable),
+								Codec.INT.fieldOf("blocks_above_table").forGetter(config -> config.blocksAboveTable),
+								Codec.INT.fieldOf("blocks_below_table").forGetter(config -> config.blocksBelowTable)
 						)
 						.apply(instance, (distance, height, depth) ->
-								new BoundsConfig(Math.abs(distance), Math.abs(height), Math.abs(depth))
+								new SearchAreaConfig(Math.abs(distance), Math.abs(height), Math.abs(depth))
 						)
 		);
 	}
@@ -73,7 +73,7 @@ public record BetterEnchantmentBoostingConfig(EnchantmentInfluencingConfig influ
 		}
 
 		var influencing = new EnchantmentInfluencingConfig(false, false, false);
-		var bounds = new BoundsConfig(3, 2, -1);
+		var bounds = new SearchAreaConfig(3, 2, -1);
 		var config = new BetterEnchantmentBoostingConfig(influencing, bounds);
 
 		var result = CODEC.encodeStart(JsonOps.INSTANCE, config).result();

@@ -35,9 +35,9 @@ public final class EnchantingUtil {
 	private static final TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:enchantment_power_transmitter"));
 
 	public static List<BlockPos> search(World world, BlockPos origin) {
-		int distance = BetterEnchantmentBoosting.CONFIG.boundsConfig().distance();
-		int height = BetterEnchantmentBoosting.CONFIG.boundsConfig().height();
-		int depth = BetterEnchantmentBoosting.CONFIG.boundsConfig().depth();
+		int distance = BetterEnchantmentBoosting.CONFIG.searchAreaConfig().horizontalBlocksFromTable();
+		int height = BetterEnchantmentBoosting.CONFIG.searchAreaConfig().blocksAboveTable();
+		int depth = BetterEnchantmentBoosting.CONFIG.searchAreaConfig().blocksBelowTable();
 		Box bounds = new Box(origin.add(-distance, -depth, -distance), origin.add(distance, height, distance));
 		SearchArea area = new SearchArea();
 
