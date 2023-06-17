@@ -61,15 +61,15 @@ dependencies {
 	modCompileOnly "maven.modrinth:puzzles-lib:v7.0.3-1.20-Fabric"
 	modCompileOnly "maven.modrinth:forge-config-api-port:v7.0.0-1.20-Fabric"
 
-	modRuntimeOnly "maven.modrinth:easy-magic:v7.0.0-1.20-Fabric"
-	modRuntimeOnly "maven.modrinth:puzzles-lib:v7.0.3-1.20-Fabric"
-	modRuntimeOnly "maven.modrinth:forge-config-api-port:v7.0.0-1.20-Fabric"
-	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.1"
-	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.1"
-	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-block:5.2.1"
-	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:5.2.1"
-	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-world:5.2.1"
-	modRuntimeOnly "com.terraformersmc:modmenu:7.0.1"
+	// modRuntimeOnly "maven.modrinth:easy-magic:v7.0.0-1.20-Fabric"
+	// modRuntimeOnly "maven.modrinth:puzzles-lib:v7.0.3-1.20-Fabric"
+	// modRuntimeOnly "maven.modrinth:forge-config-api-port:v7.0.0-1.20-Fabric"
+	// modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.1"
+	// modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.1"
+	// modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-block:5.2.1"
+	// modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:5.2.1"
+	// modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-world:5.2.1"
+	// modRuntimeOnly "com.terraformersmc:modmenu:7.0.1"
 }
 
 processResources {
