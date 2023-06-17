@@ -109,9 +109,11 @@ public final class EnchantingUtil {
 						int enchantmentLevel = bookEnchantmentMap.get(enchantment);
 
 						if (!map.containsKey(enchantment)) map.put(enchantment, 0);
+						if (map.get(enchantment) < enchantmentLevel) map.put(enchantment, enchantmentLevel);
 
-						int total = map.get(enchantment);
-						map.put(enchantment, total + enchantmentLevel);
+
+						// int total = map.get(enchantment);
+						// map.put(enchantment, total + enchantmentLevel);
 					}
 				}
 			}
@@ -120,6 +122,26 @@ public final class EnchantingUtil {
 		Item item = stack.getItem();
 		int enchantability = item.getEnchantability();
 
+		map.forEach((enchantment, maxLevel) -> {
+			int power2 = power + 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
+			int entryLevel = 1;
+
+			for(int level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
+				if (power2 >= enchantment.getMinPower(level) && power2 <= enchantment.getMaxPower(level)) {
+					entryLevel = level;
+					break;
+				}
+			}
+
+			entryLevel = Math.min(entryLevel, maxLevel);
+
+			int power3 = power + 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
+			int entryCount = enchantability * power3/10;
+
+			for (int i = 0; i < entryCount; i++) bonusEntries.add(new EnchantmentLevelEntry(enchantment, entryLevel));
+		});
+
+		/*
 		map.forEach((enchantment, totalLevels) -> {
 			int power2 = power + 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
 			int cost = 1;
@@ -142,6 +164,7 @@ public final class EnchantingUtil {
 				else cost += maxLevel;
 			}
 		});
+		*/
 
 		return bonusEntries;
 	}
