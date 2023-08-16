@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.betterenchantmentboosting.data;
+package io.github.redstoneparadox.betterenchantmentboosting.booster;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

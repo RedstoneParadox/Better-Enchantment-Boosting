@@ -1,9 +1,9 @@
 package io.github.redstoneparadox.betterenchantmentboosting;
 
 import io.github.redstoneparadox.betterenchantmentboosting.config.BetterEnchantmentBoostingConfig;
-import io.github.redstoneparadox.betterenchantmentboosting.data.ActivationCountEnchantingBooster;
-import io.github.redstoneparadox.betterenchantmentboosting.data.ActivationEnchantingBooster;
-import io.github.redstoneparadox.betterenchantmentboosting.data.InventoryEnchantingBooster;
+import io.github.redstoneparadox.betterenchantmentboosting.booster.ActivationCountEnchantingBooster;
+import io.github.redstoneparadox.betterenchantmentboosting.booster.ActivationEnchantingBooster;
+import io.github.redstoneparadox.betterenchantmentboosting.booster.InventoryEnchantingBooster;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
