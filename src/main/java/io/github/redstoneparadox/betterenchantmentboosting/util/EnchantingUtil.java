@@ -104,8 +104,8 @@ public final class EnchantingUtil {
 
 						for (Enchantment enchantment : bookEnchantmentMap.keySet()) {
 							if (!enchantment.type.isAcceptableItem(stack.getItem())
-									|| (enchantment.isTreasure() && BetterEnchantmentBoosting.CONFIG.influencingConfig().allowTreasure())
-									|| (enchantment.isCursed() && BetterEnchantmentBoosting.CONFIG.influencingConfig().allowCurses())
+									|| (enchantment.isTreasure() && !BetterEnchantmentBoosting.CONFIG.influencingConfig().allowTreasure())
+									|| (enchantment.isCursed() && !BetterEnchantmentBoosting.CONFIG.influencingConfig().allowCurses())
 							) map.remove(enchantment);
 							else possibleEnchantments.add(enchantment);
 						}
