@@ -1,6 +1,7 @@
 package io.github.redstoneparadox.betterenchantmentboosting;
 
 import io.github.redstoneparadox.betterenchantmentboosting.config.BetterEnchantmentBoostingConfig;
+import io.github.redstoneparadox.betterenchantmentboosting.data.ActivationCountEnchantingBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.data.ActivationEnchantingBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.util.CandleBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.util.ChiseledBookshelfBooster;
@@ -20,8 +21,8 @@ public final class BetterEnchantmentBoosting implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
-				TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:candles")),
-				new CandleBooster(0.25f)
+				TagKey.of(Registries.BLOCK.getKey(), new Identifier(MODID, "groupable_candles")),
+				new ActivationCountEnchantingBooster("lit", "candles", 0.25f)
 		);
 		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
 				TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:candle_cakes")),
