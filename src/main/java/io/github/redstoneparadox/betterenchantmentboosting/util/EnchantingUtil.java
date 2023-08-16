@@ -5,10 +5,12 @@ import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoos
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChiseledBookshelfBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -33,6 +35,7 @@ import java.util.Optional;
 
 public final class EnchantingUtil {
 	private static final TagKey<Block> ENCHANTMENT_POWER_TRANSMITTER = TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:enchantment_power_transmitter"));
+	private static final TagKey<Block> ENCHANTMENT_INFLUENCERS = TagKey.of(Registries.BLOCK.getKey(), new Identifier(BetterEnchantmentBoosting.MODID, "enchantment_influencers"));
 
 	public static List<BlockPos> search(World world, BlockPos origin) {
 		int horizontalBlocksFromTable = BetterEnchantmentBoosting.CONFIG.searchAreaConfig().horizontalBlocksFromTable();
@@ -86,12 +89,17 @@ public final class EnchantingUtil {
 		for (BlockPos boosterPosition: boosterPositions) {
 			BlockState boosterState = world.getBlockState(boosterPosition);
 
-			if (boosterState.getBlock() instanceof ChiseledBookshelfBlock) {
-				ChiseledBookshelfBlockEntity blockEntity = (ChiseledBookshelfBlockEntity) world.getBlockEntity(boosterPosition);
-				assert blockEntity != null;
+			if (boosterState.isIn(ENCHANTMENT_INFLUENCERS)) {
+				BlockEntity blockEntity = world.getBlockEntity(boosterPosition);
+
+				if (!(blockEntity instanceof Inventory inventory)) {
+					String blockID = Registries.BLOCK.getId(boosterState.getBlock()).toString();
+					BetterEnchantmentBoosting.LOGGER.error("Block '" + blockID + "' does not have an inventory despite being in #betterenchantmentboosting:enchantment_influencers.");
+					continue;
+				}
 
 				for (int i = 0; i < 6; i++) {
-					ItemStack bookStack = blockEntity.getStack(i);
+					ItemStack bookStack = inventory.getStack(i);
 
 					if (bookStack.isOf(Items.ENCHANTED_BOOK)) {
 						Map<Enchantment, Integer> bookEnchantmentMap = EnchantmentHelper.get(bookStack);
@@ -145,31 +153,6 @@ public final class EnchantingUtil {
 
 			for (int i = 0; i < entryCount; i++) bonusEntries.add(new EnchantmentLevelEntry(enchantment, entryLevel));
 		});
-
-		/*
-		map.forEach((enchantment, totalLevels) -> {
-			int power2 = power + 1 + random.nextInt(enchantability / 4 + 1) + random.nextInt(enchantability / 4 + 1);
-			int cost = 1;
-			int remaining = totalLevels;
-			int entryLevel = 1;
-			int maxLevel = enchantment.getMaxLevel();
-
-			for(int level = enchantment.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
-				if (power2 >= enchantment.getMinPower(level) && power2 <= enchantment.getMaxPower(level)) {
-					entryLevel = level;
-					break;
-				}
-			}
-
-			while (remaining >= cost) {
-				bonusEntries.add(new EnchantmentLevelEntry(enchantment, entryLevel));
-				remaining -= cost;
-
-				if (cost == 1) cost = maxLevel;
-				else cost += maxLevel;
-			}
-		});
-		*/
 
 		return bonusEntries;
 	}

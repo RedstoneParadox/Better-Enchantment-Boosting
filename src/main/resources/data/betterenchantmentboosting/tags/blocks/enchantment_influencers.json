@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:chiseled_bookshelf",
+    {
+      "id": "#aurorasdeco:shelves",
+      "required": false
+    }
+  ]
+}
