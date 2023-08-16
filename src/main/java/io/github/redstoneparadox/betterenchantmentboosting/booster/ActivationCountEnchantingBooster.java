@@ -15,6 +15,7 @@ import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBooster;
 import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBoosterType;
 import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBoosters;
 
+import java.util.Collection;
 import java.util.List;
 
 public record ActivationCountEnchantingBooster(String activationProperty, String countProperty, float power) implements EnchantingBooster {
@@ -76,7 +77,12 @@ public record ActivationCountEnchantingBooster(String activationProperty, String
 		}
 
 		if (state.get(boolProperty)) {
-			return power * state.get(intProperty);
+			List<Integer> values = intProperty.getValues().stream().sorted().toList();
+			int min = values.get(0);
+			int max = values.get(values.size() - 1);
+			int value = state.get(intProperty);
+
+			return power * (value - min + 1)/(max - min + 1);
 		}
 
 		return 0;

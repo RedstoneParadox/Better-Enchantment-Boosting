@@ -22,7 +22,7 @@ public final class BetterEnchantmentBoosting implements ModInitializer {
 	public void onInitialize(ModContainer mod) {
 		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
 				TagKey.of(Registries.BLOCK.getKey(), new Identifier(MODID, "groupable_candles")),
-				new ActivationCountEnchantingBooster("lit", "candles", 0.25f)
+				new ActivationCountEnchantingBooster("lit", "candles", 1.0f)
 		);
 		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
 				TagKey.of(Registries.BLOCK.getKey(), new Identifier("minecraft:candle_cakes")),
