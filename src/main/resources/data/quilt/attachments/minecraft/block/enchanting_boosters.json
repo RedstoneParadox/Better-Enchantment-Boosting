@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": {
+    "#aurorasdeco:shelves": {
+      "type": "betterenchantmentboosting:inventory",
+      "power": 1.0
+    }
+  }
+}
