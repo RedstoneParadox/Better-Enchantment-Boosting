@@ -1,4 +1,4 @@
-package io.github.redstoneparadox.betterenchantmentboosting.config;
+package io.github.redstoneparadox.betterenchantmentboosting;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
