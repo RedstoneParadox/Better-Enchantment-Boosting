@@ -28,7 +28,7 @@ public abstract class EnchantingTableBlockMixin {
 			Optional<EnchantingBooster> booster = BlockContentRegistries.ENCHANTING_BOOSTERS.get(boosterState.getBlock());
 
 			if (booster.isEmpty()) continue;
-			if (booster.get().getEnchantingBoost(world, boosterState, pos) == 0) continue;
+			if (booster.get().getEnchantingBoost(world, boosterState, boosterPosition) == 0) continue;
 			if (random.nextInt(16) != 0) continue;
 
 			int i = boosterPosition.getX() - pos.getX();
