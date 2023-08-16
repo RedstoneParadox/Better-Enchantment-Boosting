@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.redstoneparadox.betterenchantmentboosting.BetterEnchantmentBoosting;
 import net.minecraft.block.BlockState;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
@@ -37,9 +38,21 @@ public record ActivationEnchantingBooster(String activationProperty, float power
 				.filter(property2 -> property2.getName().equals(activationProperty))
 				.toList();
 
-		BooleanProperty property = (BooleanProperty) properties.get(0);
+		if (properties.isEmpty()) {
+			String blockID = Registries.BLOCK.getId(state.getBlock()).toString();
+			BetterEnchantmentBoosting.LOGGER.error("Activation enchanting booster '" + blockID + "' does not have property '" + activationProperty + "'!");
+			return 0;
+		}
 
-		if (state.get(property)) {
+		Property<?> property = properties.get(0);
+
+		if (!(property instanceof BooleanProperty boolProperty)) {
+			String blockID = Registries.BLOCK.getId(state.getBlock()).toString();
+			BetterEnchantmentBoosting.LOGGER.error("Property '" + activationProperty + "' for activation enchanting booster '" + blockID + "' is not a boolean property!");
+			return 0;
+		}
+
+		if (state.get(boolProperty)) {
 			return power;
 		}
 
