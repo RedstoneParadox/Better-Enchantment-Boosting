@@ -3,6 +3,7 @@ package io.github.redstoneparadox.betterenchantmentboosting;
 import io.github.redstoneparadox.betterenchantmentboosting.config.BetterEnchantmentBoostingConfig;
 import io.github.redstoneparadox.betterenchantmentboosting.data.ActivationCountEnchantingBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.data.ActivationEnchantingBooster;
+import io.github.redstoneparadox.betterenchantmentboosting.data.InventoryEnchantingBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.util.CandleBooster;
 import io.github.redstoneparadox.betterenchantmentboosting.util.ChiseledBookshelfBooster;
 import net.minecraft.block.Blocks;
@@ -33,7 +34,7 @@ public final class BetterEnchantmentBoosting implements ModInitializer {
 		);
 		BlockContentRegistries.ENCHANTING_BOOSTERS.put(
 				Blocks.CHISELED_BOOKSHELF,
-				new ChiseledBookshelfBooster(1.0f)
+				new InventoryEnchantingBooster(1.0f)
 		);
 	}
 }
