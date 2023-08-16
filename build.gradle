@@ -57,13 +57,13 @@ dependencies {
 	// modImplementation libs.bundles.quilted.fabric.api // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
 
 	// All this to verify that a single mixin to easy magic would work
-	modCompileOnly "maven.modrinth:easy-magic:v7.0.0-1.20-Fabric"
-	modCompileOnly "maven.modrinth:puzzles-lib:v7.0.3-1.20-Fabric"
-	modCompileOnly "maven.modrinth:forge-config-api-port:v7.0.0-1.20-Fabric"
+	modCompileOnly "maven.modrinth:easy-magic:v8.0.1-1.20.1-Fabric"
+	modCompileOnly "maven.modrinth:puzzles-lib:v8.0.23-1.20.1-Fabric"
+	modCompileOnly "maven.modrinth:forge-config-api-port:v8.0.0-1.20.1-Fabric"
 
-	modRuntimeOnly "maven.modrinth:easy-magic:v7.0.0-1.20-Fabric"
-	modRuntimeOnly "maven.modrinth:puzzles-lib:v7.0.3-1.20-Fabric"
-	modRuntimeOnly "maven.modrinth:forge-config-api-port:v7.0.0-1.20-Fabric"
+	modRuntimeOnly "maven.modrinth:easy-magic:v8.0.1-1.20.1-Fabric"
+	modRuntimeOnly "maven.modrinth:puzzles-lib:v8.0.23-1.20.1-Fabric"
+	modRuntimeOnly "maven.modrinth:forge-config-api-port:v8.0.0-1.20.1-Fabric"
 	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.1"
 	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.1"
 	modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-block:5.2.1"
