@@ -9,6 +9,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
@@ -17,6 +19,7 @@ import org.quiltmc.qsl.block.content.registry.api.enchanting.EnchantingBoosterTy
 public final class BetterEnchantmentBoosting implements ModInitializer {
 	public static final String MODID = "betterenchantmentboosting";
 	public static final BetterEnchantmentBoostingConfig CONFIG = BetterEnchantmentBoostingConfig.load();
+	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	@Override
 	public void onInitialize(ModContainer mod) {

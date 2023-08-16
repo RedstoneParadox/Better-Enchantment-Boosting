@@ -97,6 +97,11 @@ public final class EnchantingUtil {
 						Map<Enchantment, Integer> bookEnchantmentMap = EnchantmentHelper.get(bookStack);
 						List<Enchantment> possibleEnchantments = new ArrayList<>();
 
+						if (bookEnchantmentMap.isEmpty()) {
+							BetterEnchantmentBoosting.LOGGER.warn("Attempted to influence enchanting table with empty enchanted book.");
+							continue;
+						}
+
 						for (Enchantment enchantment : bookEnchantmentMap.keySet()) {
 							if (!enchantment.type.isAcceptableItem(stack.getItem())
 									|| (enchantment.isTreasure() && BetterEnchantmentBoosting.CONFIG.influencingConfig().allowTreasure())
@@ -105,15 +110,15 @@ public final class EnchantingUtil {
 							else possibleEnchantments.add(enchantment);
 						}
 
+						if (possibleEnchantments.isEmpty()) {
+							continue;
+						}
+
 						Enchantment enchantment = possibleEnchantments.get(random.nextInt(possibleEnchantments.size()));
 						int enchantmentLevel = bookEnchantmentMap.get(enchantment);
 
 						if (!map.containsKey(enchantment)) map.put(enchantment, 0);
 						if (map.get(enchantment) < enchantmentLevel) map.put(enchantment, enchantmentLevel);
-
-
-						// int total = map.get(enchantment);
-						// map.put(enchantment, total + enchantmentLevel);
 					}
 				}
 			}
