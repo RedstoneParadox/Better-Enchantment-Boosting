@@ -18,22 +18,73 @@
     "minecraft:green_candle",
     "minecraft:red_candle",
     "minecraft:black_candle",
-    "aurorasdeco:wall_candle",
-    "aurorasdeco:wall_white_candle",
-    "aurorasdeco:wall_orange_candle",
-    "aurorasdeco:wall_magenta_candle",
-    "aurorasdeco:wall_light_blue_candle",
-    "aurorasdeco:wall_yellow_candle",
-    "aurorasdeco:wall_lime_candle",
-    "aurorasdeco:wall_pink_candle",
-    "aurorasdeco:wall_gray_candle",
-    "aurorasdeco:wall_light_gray_candle",
-    "aurorasdeco:wall_cyan_candle",
-    "aurorasdeco:wall_purple_candle",
-    "aurorasdeco:wall_blue_candle",
-    "aurorasdeco:wall_brown_candle",
-    "aurorasdeco:wall_green_candle",
-    "aurorasdeco:wall_red_candle",
-    "aurorasdeco:wall_black_candle"
+    {
+      "id": "aurorasdeco:wall_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_white_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_orange_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_magenta_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_light_blue_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_yellow_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_lime_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_pink_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_gray_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_light_gray_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_cyan_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_purple_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_blue_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_brown_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_green_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_red_candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:wall_black_candle",
+      "required": false
+    }
   ]
 }
