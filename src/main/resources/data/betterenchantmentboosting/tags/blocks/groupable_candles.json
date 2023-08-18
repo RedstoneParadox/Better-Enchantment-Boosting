@@ -85,6 +85,74 @@
     {
       "id": "aurorasdeco:wall_black_candle",
       "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/candle",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/white",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/orange",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/magenta",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/light_blue",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/yellow",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/lime",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/pink",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/gray",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/light_gray",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/cyan",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/purple",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/blue",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/brown",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/green",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/red",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:chandelier/black",
+      "required": false
     }
   ]
 }
