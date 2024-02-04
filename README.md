@@ -6,3 +6,33 @@
 # Better Enchantment Boosting
 
 A Minecraft mod that allows bookshelves to boost the Enchanting Table from farther away.
+
+### Adding Better Enchantment Boosting To Your Project
+
+`build.gradle`:
+
+```gradle
+maven {
+    name "redstoneparadoxRepositoryReleases"
+    url "https://maven.redstoneparadox.xyz/releases"
+}
+
+dependencies {
+    modImplementation "io.github.redstoneparadox:Better-Enchantment-Boosting:<version>"
+}
+```
+
+`build.gradle.kts`:
+
+```kotlin
+maven {
+    name = "redstoneparadoxRepositoryReleases"
+    url = uri("https://maven.redstoneparadox.xyz/releases")
+}
+
+dependencies {
+	modImplementation("io.github.redstoneparadoxBetter-Enchantment-Boosting:<version>")
+}
+```
+
+Note that versions before 1.4.1 aren't available on my maven.
